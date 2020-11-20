@@ -1,12 +1,13 @@
-import React from 'react';
-import './index.css';
+import React from 'react'
+import './index.css'
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
         <p>
-          Edit <code>src/App.tsx</code> and save to reload.
+          Edit <code>src/App.tsx</code> and save to reload. and save to reload.
+          and save to reload. and save to reload. and save to reload.
         </p>
         <a
           className="App-link"
@@ -18,7 +19,7 @@ function App() {
         </a>
       </header>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
