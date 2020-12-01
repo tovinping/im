@@ -1,14 +1,11 @@
 import React from 'react'
+import Dialog from './Dialog'
 import './index.css'
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload. and save to reload.
-          and save to reload. and save to reload. and save to reload.
-        </p>
         <a
           className="App-link-test"
           href="https://reactjs.org"
@@ -17,6 +14,7 @@ function App() {
         >
           Learn React
         </a>
+        <Dialog />
       </header>
     </div>
   )
