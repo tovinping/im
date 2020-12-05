@@ -8,7 +8,8 @@ function createWindow() {
     height: 600,
     webPreferences: {
       contextIsolation: false,
-      preload: path.join(__dirname, 'preload.js'),
+      nodeIntegration: false,
+      preload: path.join(__dirname, "preload.js"),
     },
   })
   // and load the index.html of the app.
