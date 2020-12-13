@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IM test</title>
+</head>
+
+<body>
+  <div>
+    <ul id="list"></ul>
+    <textarea name="" id="input" cols="30" rows="10"></textarea>
+    <button id="send">发送</button>
+  </div>
+  <script src="https://cdn.socket.io/socket.io-3.0.3.js"></script>
+  <script>
+    const inputEl = document.getElementById('input')
+    const sendEl = document.getElementById('send')
+    const listEl = document.getElementById('list')
+    // console.log(io.Manager)
+    sendEl.onclick = function () {
+      const sendMsg = inputEl.value || '测试数据'
+      console.log('发送数据：', sendMsg)
+      socket.emit('chat message', sendMsg);
+    }
+    var socket = io.connect('ws://localhost:4000');
+    socket.on('connect', () => {
+      console.log('socket connected')
+    })
+    socket.on('message', function (data) {
+      console.log(data);
+    });
+    setInterval(() => {
+      const start = Date.now()
+      socket.emit("ping", () => {
+        console.log(`pong (latency: ${Date.now() - start} ms)`);
+      });
+    }, 10000)
+    // const manager = new io.Manager("ws://localhost:4000");
+    // const socket = manager.socket("/");
+
+    // socket.on("connect", () => {
+    //   console.log(`connect ${socket.id}`);
+    // });
+  </script>
+</body>
+
+</html>
