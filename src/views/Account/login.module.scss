@@ -17,7 +17,7 @@
   padding-bottom: 30px;
   margin: 0 auto;
   border-radius: 6px;
-  h1{
+  h1 {
     height: 50px;
     line-height: 50px;
     color: #4b6993;
@@ -28,24 +28,22 @@
     border-bottom: 1px solid #4b6993;
   }
 }
-.account, .password{
+.account,
+.password {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 10px 20px;
-  >div:first-child{
+  > div:first-child {
     width: 60px;
     text-align: justify;
   }
 }
-.input{
+.input {
   width: 240px;
   height: 25px;
 }
-.button{
-  width: 315px;
-  height: 40px;
-  margin: 30px auto;
-  margin-bottom: 0;
-  border-radius: 6px;
+.loginBtn {
+  margin-top: 20px;
+  padding: 0 45px;
 }

@@ -1,10 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './index.css'
 import Router from './views/Router'
+import client from './utils/clientSocket'
 import reportWebVitals from './reportWebVitals'
+import './index.css'
+import 'antd/dist/antd.css'
 import './resource/scss/reset.scss'
-
+client.init()
 ReactDOM.render(
   <React.StrictMode>
     <Router />
