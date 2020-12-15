@@ -1,4 +1,5 @@
 import { Manager, Socket } from 'socket.io-client'
+
 class ClientSocket {
   static socket: Socket
   static init() {
@@ -8,16 +9,22 @@ class ClientSocket {
 
     this.socket.on('connect', () => {
       console.log(`connect ${this.socket.id}`)
+      this.onMessage()
     })
 
     this.socket.on('disconnect', () => {
       console.log(`disconnect`)
     })
   }
-  static sendMsg() {
-    this.socket.send('sss', () => {
-      console.log('send ok')
+  static onMessage() {
+    this.socket.on('chat message', (...res: any) => {
+      console.log(res)
     })
+  }
+  static sendTextMsg(content: string) {
+    console.log(this.socket)
+    const res = this.socket.emit('chat message', content)
+    console.log('rrrrrrrrrrrrrrrr', res)
   }
 }
 
