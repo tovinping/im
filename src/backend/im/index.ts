@@ -5,11 +5,11 @@ import cors from 'koa2-cors'
 import * as fs from 'fs'
 import * as http from 'http'
 
+const onLineMap: any = {}
+
 const app = new Koa()
 const server = http.createServer(app.callback())
 const io = new Server(server, {cors: {origin: '*'}})
-
-// socket连接允许跨域
 
 // 中间件
 app.use(cors())
@@ -25,18 +25,33 @@ router.get('/test', (ctx: any) => {
 })
 app.use(router.routes())
 
+io.use((socket, next) => {
+  let handshake = socket.handshake;
+  console.log('handshake', handshake.auth, socket.id)
+  // next(new Error('token error'))
+  next()
+})
 // socket连接
 io.on('connection', (socket: Socket) => {
-  socket.on('chat message', (msg: any) => {
-    console.log('message: ' + msg)
-    io.emit('chat message', msg)
+  onLineMap[socket.id] = socket
+  console.log('on connection...')
+  socket.on('message', (msg, cb) => {
+    console.log('*************', msg)
+    for (const key in onLineMap) {
+      if (key !== socket.id) {
+        onLineMap[key].send(msg)
+      }
+    }
+    cb({msg: 'ok'})
   })
+  socket.send(Object.keys(onLineMap))
   socket.on('ping', (cb: any) => {
     console.log('ping')
     cb()
   })
   socket.on('disconnect', () => {
     console.log('user disconnected')
+    delete onLineMap[socket.id]
   })
 })
 
