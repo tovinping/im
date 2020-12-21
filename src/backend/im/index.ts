@@ -1,9 +1,20 @@
 import Koa from 'koa'
 import Router from 'koa-router'
+import koaBody from 'koa-body'
 import {Server, Socket} from 'socket.io'
 import cors from 'koa2-cors'
 import * as fs from 'fs'
 import * as http from 'http'
+const userMap: any = {
+  test: {
+    name: 'test',
+    isLogin: false
+  },
+  test123: {
+    name: 'test123',
+    isLogin: false
+  },
+}
 
 const onLineMap: any = {}
 
@@ -13,6 +24,7 @@ const io = new Server(server, {cors: {origin: '*'}})
 
 // 中间件
 app.use(cors())
+app.use(koaBody())
 
 // 首页路由
 let router = new Router()
@@ -23,6 +35,19 @@ router.get('/', (ctx: any) => {
 router.get('/test', (ctx: any) => {
   ctx.body = 'testAb'
 })
+router.get('/login', (ctx: any) => {
+  console.log(ctx.query)
+  const {account} = ctx.query
+  if (!account) {
+    ctx.body = {code: -1, msg:'参数错误'} 
+  } else if (userMap[account] && !userMap[account].isLogin) {
+    userMap[account].isLogin = true
+    ctx.body = {code: 0, msg: '登录成功', data: userMap[account]}
+  } else {
+    ctx.body = {code: -1, msg: '帐号不存在或者已经登录'}
+  }
+})
+
 app.use(router.routes())
 
 io.use((socket, next) => {
