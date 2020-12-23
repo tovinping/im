@@ -2,13 +2,13 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux';
 import Router from './views/Router'
-import client from './utils/clientSocket'
+// import client from './utils/clientSocket'
 import store from './store'
 import reportWebVitals from './reportWebVitals'
 import './index.css'
 import 'antd/dist/antd.css'
 import './resource/scss/reset.scss'
-client.init()
+// client.init()
 ReactDOM.render(
   <Provider store={store}>
     <Router />

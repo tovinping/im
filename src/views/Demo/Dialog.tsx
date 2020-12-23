@@ -1,6 +1,8 @@
-import React, {useEffect, useCallback, useState} from 'react'
-
-export default function Dialog() {
+import React, { useEffect, useCallback, useState } from 'react'
+interface IProps {
+  content: React.ReactNode
+}
+export default function Dialog(props: IProps) {
   const [visible, setVisible] = useState(true)
   const bodyClick = useCallback(() => {
     console.log('bodyClick*****************')
@@ -14,10 +16,10 @@ export default function Dialog() {
   }, [bodyClick])
   function handleClick(e: React.MouseEvent) {
     e.nativeEvent.stopImmediatePropagation()
-    console.log('tangwenping')
   }
-  return <div>
-    ---------------
-    {visible ? <div onClick={handleClick}>aaaaaaaaaaa</div>: null}
-  </div>
+  return (
+    <div>
+      {visible ? <div onClick={handleClick}>{props.content}</div> : null}
+    </div>
+  )
 }
