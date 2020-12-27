@@ -5,6 +5,7 @@ import {Server, Socket} from 'socket.io'
 import cors from 'koa2-cors'
 import * as fs from 'fs'
 import * as http from 'http'
+import {IMsgParam} from '../../interface/message'
 const userMap: any = {
   test: {
     name: 'test',
@@ -15,7 +16,7 @@ const userMap: any = {
     isLogin: false
   },
 }
-
+const socketMap: any = {}
 const onLineMap: any = {}
 
 const app = new Koa()
@@ -51,20 +52,25 @@ router.get('/login', (ctx: any) => {
 app.use(router.routes())
 
 io.use((socket, next) => {
-  let handshake = socket.handshake;
-  console.log('handshake', handshake.auth, socket.id)
-  // next(new Error('token error'))
-  next()
+  let auth = socket.handshake.auth as any
+  if (!auth.token) {
+    next(new Error('token error'))
+  } else {
+    console.log('handshake', auth.token)
+    socketMap[auth.token] = socket
+    next()
+  }
 })
 // socket连接
 io.on('connection', (socket: Socket) => {
   onLineMap[socket.id] = socket
   console.log('on connection...')
-  socket.on('message', (msg, cb) => {
+  socket.on('message', (msg: IMsgParam, cb) => {
     console.log('*************', msg)
-    for (const key in onLineMap) {
-      if (key !== socket.id) {
-        onLineMap[key].send(msg)
+    for (const key in socketMap) {
+      if (key  === msg.conversationId) {
+        socketMap[key].send(msg)
+        break;
       }
     }
     cb({msg: 'ok'})

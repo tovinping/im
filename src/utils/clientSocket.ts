@@ -1,11 +1,12 @@
 import { Manager, Socket } from 'socket.io-client'
-
+import {IMsgParam} from 'src/interface/message'
+import {handleReceiveMsg} from 'src/utils/message'
 class ClientSocket {
   static socket: Socket
-  static init() {
+  static init(token: string) {
     if (this.socket) return
     const manager = new Manager('ws://localhost:4000')
-    this.socket = manager.socket('/', { auth: { id: '003', token: 'ttt' } })
+    this.socket = manager.socket('/', { auth: { token } })
 
     this.socket.on('connect', () => {
       console.log(`connect ${this.socket.id}`)
@@ -25,16 +26,13 @@ class ClientSocket {
     })
   }
   static onMessage() {
-    console.log('startReceiveMsg...')
-    this.socket.on('message', (...res: any) => {
-      console.log('onReceiveMsg:', res)
-    })
+    this.socket.on('message', handleReceiveMsg)
   }
   static createMsgBase() {
     return {}
   }
-  static sendTextMsg(content: string) {
-    this.socket.send(content, (res: any) => {
+  static sendTextMsg(data: IMsgParam) {
+    this.socket.send(data, (res: any) => {
       console.log('sendMsgResult:', res)
     })
   }

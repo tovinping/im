@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { Button, Input, message, Spin } from 'antd'
 import { useHistory } from 'react-router'
+import {globalDispatch} from 'src/store'
 import { login } from 'src/api/user'
+import socketClient from 'src/utils/clientSocket'
 import style from './login.module.scss'
 // UI参照 http://kfqtj.zcom.gov.cn/index.htm
 window.addEventListener('unload', () => {
@@ -21,7 +23,9 @@ export default function Login() {
     setLoading(true)
     login({ account, password })
       .then((res) => {
+        globalDispatch({type: 'updateGlobal', payload: {isLogin: true, account}})
         setLoading(false)
+        socketClient.init(account)
         history.push('/chat')
       })
       .catch((err) => {

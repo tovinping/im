@@ -1,5 +1,5 @@
 import React from 'react'
-
-export default function MsgItemText() {
-  return <div>这是文本消息</div>
+import {IMsgItem} from 'src/interface/message'
+export default function MsgItemText(props: IMsgItem) {
+  return <div>{props.content}</div>
 }

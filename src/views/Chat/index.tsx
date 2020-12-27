@@ -1,12 +1,22 @@
-import React from 'react'
+import React, {useEffect} from 'react'
+import {useHistory} from 'react-router'
 import { useSelector } from 'src/store'
 import Conversation from 'src/views/Components/Conversation'
 import MsgList from '../Components/MsgList'
 import Editor from '../Components/Editor'
+import {getConversation} from 'src/utils/conversation'
 const style = require('./index.module.scss')
 export default function Chat() {
-  const conversation = useSelector((state) => state.conversation)
-  console.log(conversation)
+  const history = useHistory()
+  const isLogin = useSelector(state => state.global.isLogin)
+  useEffect(() => {
+    getConversation()
+  }, [])
+  useEffect(() => {
+    if (!isLogin) {
+      history.replace('/')
+    }
+  }, [isLogin, history])
   return (
     <div className={style.chatContainer}>
       <div className={style.chatLeft}>

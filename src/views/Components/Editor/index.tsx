@@ -1,10 +1,12 @@
 import React, {useRef} from 'react'
 import {Button,message} from 'antd'
 import {AlertTwoTone, DashOutlined, GiftTwoTone, ReadFilled} from '@ant-design/icons'
+import {useSelector} from 'src/store'
 import {sendTextMsg} from 'src/utils/message'
 import style from './index.module.scss'
 
 export default function Editor() {
+  const currentConversation = useSelector(state => state.conversation.current)
   const editRef = useRef<HTMLDivElement>(null)
   function handSend() {
     const text = editRef.current?.innerText
@@ -13,7 +15,7 @@ export default function Editor() {
       return
     }
     editRef.current!.innerHTML = ''
-    sendTextMsg(text)
+    sendTextMsg(currentConversation.id!, text)
   }
   return (
     <div className={style.editorContainer}>
