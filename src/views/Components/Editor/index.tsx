@@ -1,7 +1,7 @@
 import React, {useRef} from 'react'
 import {Button,message} from 'antd'
 import {AlertTwoTone, DashOutlined, GiftTwoTone, ReadFilled} from '@ant-design/icons'
-import {sendTextMsg} from '../../../utils/message'
+import {sendTextMsg} from 'src/utils/message'
 import style from './index.module.scss'
 
 export default function Editor() {

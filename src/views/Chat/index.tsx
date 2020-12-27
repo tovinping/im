@@ -1,6 +1,6 @@
 import React from 'react'
-import { useSelector } from '../../store'
-import Conversation from '../Components/Conversation'
+import { useSelector } from 'src/store'
+import Conversation from 'src/views/Components/Conversation'
 import MsgList from '../Components/MsgList'
 import Editor from '../Components/Editor'
 const style = require('./index.module.scss')

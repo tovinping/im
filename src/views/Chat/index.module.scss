@@ -1,21 +1,21 @@
-.chatContainer{
+.chatContainer {
   display: flex;
   width: 100%;
   height: 100%;
 }
-.chatLeft{
+.chatLeft {
   width: 200px;
   border-right: 1px solid #eee;
 }
-.chatRight{
+.chatRight {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
-.msgListWrap{
+.msgListWrap {
   flex: 1;
 }
-.editorWrap{
+.editorWrap {
   height: 200px;
   border-top: 1px solid #eee;
 }

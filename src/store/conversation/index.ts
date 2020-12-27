@@ -1,4 +1,4 @@
-import { IConversationState, IActions, IConversation } from '../../interface/conversation'
+import { IConversationState, IActions, IConversation } from 'src/interface/conversation'
 const initialState: IConversationState = {
   list: [],
   current: {},

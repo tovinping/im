@@ -1,7 +1,7 @@
-import React, { useState, useMemo } from 'react'
-import { Button, Input, message } from 'antd'
+import React, { useState } from 'react'
+import { Button, Input, message, Spin } from 'antd'
 import { useHistory } from 'react-router'
-import { login } from '../../api/user'
+import { login } from 'src/api/user'
 import style from './login.module.scss'
 // UI参照 http://kfqtj.zcom.gov.cn/index.htm
 window.addEventListener('unload', () => {
@@ -12,22 +12,28 @@ export default function Login() {
   const history = useHistory()
   const [account, setAccount] = useState('')
   const [password, setPassword] = useState('')
-  const stopLogin = useMemo(() => {
-    return !Boolean(account.trim() && password.trim())
-  }, [account, password])
+  const [loading, setLoading] = useState(false)
   function doLogin() {
+    if (!account.trim() || !password.trim()) {
+      message.error('请输入用户名和密码', 1)
+      return
+    }
+    setLoading(true)
     login({ account, password })
       .then((res) => {
+        setLoading(false)
         history.push('/chat')
       })
       .catch((err) => {
+        setLoading(false)
         message.error(err.message, 1)
       })
   }
   return (
-    <div className={style.loginContainer}>
-      <div>
-        <div className={style.title}>IM登陆</div>
+    <Spin spinning={loading} tip={'登录中...'} wrapperClassName={style.spinWrap}>
+      <div className={style.loginContainer}>
+        <h1 className={style.title}>帐号登录</h1>
+        <h2 className={style.subTitle}>Development zone</h2>
         <div className={style.inputPanel}>
           <h1>用户登录</h1>
           <div className={style.account}>
@@ -52,7 +58,6 @@ export default function Login() {
           <div className={style.loginBtn}>
             <Button
               type="primary"
-              disabled={stopLogin}
               block
               size="large"
               onClick={doLogin}
@@ -62,6 +67,6 @@ export default function Login() {
           </div>
         </div>
       </div>
-    </div>
+    </Spin>
   )
 }

@@ -73,7 +73,6 @@ const hasJsxRuntime = (() => {
     return false;
   }
 })();
-
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
 module.exports = function (webpackEnv) {
@@ -141,7 +140,7 @@ module.exports = function (webpackEnv) {
           loader: require.resolve('resolve-url-loader'),
           options: {
             sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
-            root: paths.appSrc,
+            // root: paths.appSrc,
           },
         },
         {
