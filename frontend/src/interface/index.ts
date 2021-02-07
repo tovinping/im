@@ -7,8 +7,3 @@ export type ITransferActions<T> = {
 export interface IAnyObj<T = any> {
   [K: string]: T
 }
-export interface IBaseRes<T = any> {
-  code: 0 | -1
-  msg: string
-  data: T
-}

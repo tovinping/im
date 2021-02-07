@@ -5,7 +5,7 @@ import {Server, Socket} from 'socket.io'
 import cors from 'koa2-cors'
 import * as fs from 'fs'
 import * as http from 'http'
-import {IMsgParam} from '../../interface/message'
+import {IBaseMsg} from '../../typing/message'
 const userMap: any = {
   test: {
     name: 'test',
@@ -65,7 +65,7 @@ io.use((socket, next) => {
 io.on('connection', (socket: Socket) => {
   onLineMap[socket.id] = socket
   console.log('on connection...')
-  socket.on('message', (msg: IMsgParam, cb) => {
+  socket.on('message', (msg: IBaseMsg, cb) => {
     console.log('*************', msg)
     for (const key in socketMap) {
       if (key  === msg.conversationId) {

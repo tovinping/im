@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Button, Input, message, Spin } from 'antd'
 import { useHistory } from 'react-router'
-import {globalDispatch} from 'src/store'
+import { globalDispatch } from 'src/store'
 import { login } from 'src/api/user'
 import socketClient from 'src/utils/clientSocket'
 import style from './login.module.scss'
@@ -15,23 +15,20 @@ export default function Login() {
   const [account, setAccount] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
-  function doLogin() {
+  async function doLogin() {
     if (!account.trim() || !password.trim()) {
       message.error('请输入用户名和密码', 1)
       return
     }
     setLoading(true)
-    login({ account, password })
-      .then((res) => {
-        globalDispatch({type: 'updateGlobal', payload: {isLogin: true, account}})
-        setLoading(false)
-        socketClient.init(account)
-        history.push('/chat')
-      })
-      .catch((err) => {
-        setLoading(false)
-        message.error(err.message, 1)
-      })
+    const data = await login({ account, password })
+    setLoading(false)
+    if (data) {
+      console.log(data)
+      globalDispatch({ type: 'updateGlobal', payload: { isLogin: true, account } })
+      socketClient.init(account)
+      history.push('/chat')
+    }
   }
   return (
     <Spin spinning={loading} tip={'登录中...'} wrapperClassName={style.spinWrap}>
@@ -43,29 +40,17 @@ export default function Login() {
           <div className={style.account}>
             <div>用户名</div>
             <div className={style.input}>
-              <Input
-                placeholder={'请输入用户名'}
-                onChange={(evt) => setAccount(evt.target.value)}
-              />
+              <Input placeholder={'请输入用户名'} onChange={(evt) => setAccount(evt.target.value)} />
             </div>
           </div>
           <div className={style.password}>
             <div>密&nbsp;&nbsp;&nbsp;&nbsp;码</div>
             <div className={style.input}>
-              <Input
-                placeholder={'请输入密码'}
-                type={'password'}
-                onChange={(evt) => setPassword(evt.target.value)}
-              />
+              <Input placeholder={'请输入密码'} type={'password'} onChange={(evt) => setPassword(evt.target.value)} />
             </div>
           </div>
           <div className={style.loginBtn}>
-            <Button
-              type="primary"
-              block
-              size="large"
-              onClick={doLogin}
-            >
+            <Button type="primary" block size="large" onClick={doLogin}>
               登录
             </Button>
           </div>

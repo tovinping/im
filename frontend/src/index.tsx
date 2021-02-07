@@ -1,8 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux';
-import { RecoilRoot } from 'recoil'
-
 import Router from './views/Router'
 import store from './store'
 import reportWebVitals from './reportWebVitals'
@@ -10,17 +8,10 @@ import './index.css'
 import 'antd/dist/antd.css'
 import './resource/scss/reset.scss'
 
-// ReactDOM.render(
-//   <Provider store={store}>
-//     <Router />
-//   </Provider>,
-//   document.getElementById('root')
-// )
-
 ReactDOM.render(
-  <RecoilRoot>
+  <Provider store={store}>
     <Router />
-  </RecoilRoot>,
+  </Provider>,
   document.getElementById('root')
 )
 
