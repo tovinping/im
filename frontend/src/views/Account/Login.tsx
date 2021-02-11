@@ -3,9 +3,9 @@ import { Button, Input, message, Spin } from 'antd'
 import { useHistory } from 'react-router'
 import { globalDispatch } from 'src/store'
 import { login } from 'src/api/user'
+import TopBar from 'src/components/TopBar'
 import socketClient from 'src/utils/clientSocket'
 import style from './login.module.scss'
-// UI参照 http://kfqtj.zcom.gov.cn/index.htm
 window.addEventListener('unload', () => {
   console.log('page will unload')
   alert('aaa')
@@ -33,6 +33,7 @@ export default function Login() {
   return (
     <Spin spinning={loading} tip={'登录中...'} wrapperClassName={style.spinWrap}>
       <div className={style.loginContainer}>
+        <TopBar />
         <h1 className={style.title}>帐号登录</h1>
         <h2 className={style.subTitle}>Development zone</h2>
         <div className={style.inputPanel}>

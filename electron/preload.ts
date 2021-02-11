@@ -1,6 +1,7 @@
-// All of the Node.js APIs are available in the preload process.
-// It has the same sandbox as a Chrome extension.
-window.addEventListener('click', function() {
-  console.log('window.click...')
-})
+/// <reference path="../typing/window.ts" />
+import './utils/renderEvent'
+import * as windowUtils from './utils/window'
+window.NodeBridge = {
+  ...windowUtils
+}
 export {}

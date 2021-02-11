@@ -1,11 +1,12 @@
-import { app, BrowserWindow, ipcMain } from 'electron'
+import { app, BrowserWindow } from 'electron'
 import * as path from 'path'
+import * as mainEvent from './utils/mainEvent'
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
     width: 800,
-    // frame: false,
+    frame: false,
     height: 600,
     webPreferences: {
       contextIsolation: false,
@@ -14,26 +15,15 @@ function createWindow() {
       preload: path.join(__dirname, 'preload.js'),
     },
   })
-  // mainWindow.loadURL('http://localhost:3000/')
-  const fileUrl = path.resolve(__dirname, '../build/index.html')
-  mainWindow.loadFile(fileUrl)
-  // Open the DevTools.
+  let fileUrl = ''
+  if (process.env.NODE_ENV === 'development') {
+    mainWindow.loadURL('http://localhost:3000/')
+  } else {
+    fileUrl = path.resolve(__dirname, '../build/index.html')
+    mainWindow.loadFile(fileUrl)
+  }
+  mainEvent.initEvent(mainWindow)
   mainWindow.webContents.openDevTools()
-
-  ipcMain.on('closeBefore', (evt, data) => {
-    console.log('closeBefore##', data)
-    mainWindow.destroy()
-  })
-  mainWindow.on('close',() => {
-    console.log('main process listen close')
-  })
-  mainWindow.on('closed', () => {
-    console.log('mainWindow is closed...')
-  })
-  // ipcMain.on('closeWindow', (evt, data) => {
-  //   console.log('closeWindow##', data)
-  //   mainWindow.close()
-  // })
 }
 
 app.on('ready', () => {
