@@ -6,6 +6,7 @@ declare global {
       maxSize(): void
       normalSize(): void
     }
+    handleBroadcast<T = any>(channel: string, payload?: T): void
   }
 }
 export {}

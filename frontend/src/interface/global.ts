@@ -2,7 +2,9 @@ import {ITransferActions} from '../interface'
 
 export interface IGlobalState {
   isLogin: boolean
-  account: string;
+  account: string
+  windowSize: 'maxSize' | 'minSize' | 'normalSize'
+  windowVisible: 'hide' | 'show'
 }
 
 interface IActionsMap {

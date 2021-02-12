@@ -8,6 +8,7 @@ import reportWebVitals from './reportWebVitals'
 import './index.css'
 import 'antd/dist/antd.css'
 import './resource/scss/reset.scss'
+import './utils/eventHandle'
 
 ReactDOM.render(
   <Provider store={store}>

@@ -2,6 +2,8 @@ import { IGlobalState, IActions } from 'src/interface/global'
 const initialState: IGlobalState = {
   isLogin: false,
   account: '',
+  windowSize: 'normalSize',
+  windowVisible: 'show'
 }
 export default function reducer(
   state = initialState,

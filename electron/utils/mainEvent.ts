@@ -6,7 +6,6 @@ export function initEvent(win: BrowserWindow) {
     win.webContents.send('maxSize', { msg: 'maxSize' })
   })
   win.addListener('minimize', () => {
-    console.log('MMMMM')
     win.webContents.send('minSize', { msg: 'minSize' })
   })
   win.addListener('unmaximize', () => {

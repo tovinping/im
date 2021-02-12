@@ -1,10 +1,10 @@
-import { ipcRenderer, remote } from 'electron'
+import { ipcRenderer } from 'electron'
 ipcRenderer.on('maxSize', () => {
-  console.log('maxSize...')
+  window.handleBroadcast('maxSize')
 })
 ipcRenderer.on('minSize', () => {
-  console.log('minSize...')
+  window.handleBroadcast('minSize')
 })
 ipcRenderer.on('normalSize', () => {
-  console.log('normalSize...')
+  window.handleBroadcast('normalSize')
 })
