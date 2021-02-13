@@ -7,7 +7,7 @@ import { Server, Socket } from 'socket.io'
 import * as cors from 'koa2-cors'
 import * as http from 'http'
 import { AppRoutes } from './routes'
-import { IBaseMsg } from '../../typing/message'
+import { IBaseMsg } from '../typing/message'
 const userMap: any = {
   test: {
     name: 'test',
@@ -22,12 +22,12 @@ const socketMap: any = {}
 const onLineMap: any = {}
 let connectConfig
 if (process.env.NODE_ENV === 'development') {
-  connectConfig = require('C:\\config\\mysql.config')
+  connectConfig = require('C:\\config\\mysql.json')
 } else {
   connectConfig = require('C:\\config\\mysql.json')
 }
 createConnection(connectConfig)
-  .then(async (connection) => {
+  .then(async () => {
     const app = new Koa()
     const router = new Router()
 
