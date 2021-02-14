@@ -1,23 +1,12 @@
 import 'reflect-metadata'
 import * as Koa from 'koa'
-import * as Router from 'koa-router'
 import * as koaBody from 'koa-body'
 import { createConnection } from 'typeorm'
 import { Server, Socket } from 'socket.io'
 import * as cors from 'koa2-cors'
 import * as http from 'http'
-import { AppRoutes } from './routes'
+import {loadRouter} from './routes'
 import { IBaseMsg } from '../typing/message'
-const userMap: any = {
-  test: {
-    name: 'test',
-    isLogin: false,
-  },
-  test123: {
-    name: 'test123',
-    isLogin: false,
-  },
-}
 const socketMap: any = {}
 const onLineMap: any = {}
 let connectConfig
@@ -29,7 +18,6 @@ if (process.env.NODE_ENV === 'development') {
 createConnection(connectConfig)
   .then(async () => {
     const app = new Koa()
-    const router = new Router()
 
     const server = http.createServer(app.callback())
     const io = new Server(server, { cors: { origin: '*' } })
@@ -37,8 +25,8 @@ createConnection(connectConfig)
     // 中间件
     app.use(cors())
     app.use(koaBody())
-    AppRoutes.forEach((route) => router[route.method](route.path, route.action))
-    app.use(router.routes())
+    loadRouter(app)
+    // socket
     io.use((socket, next) => {
       let auth = socket.handshake.auth as any
       if (!auth.token) {
