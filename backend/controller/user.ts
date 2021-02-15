@@ -10,17 +10,29 @@ export default class UserController {
   }
   @Post('/user')
   addUser(ctx: Context) {
-    const user = new User()
-    user.chinesName = 'ccc'
-    user.pinyinName = 'ppp'
-    User.save(user)
-    ctx.body = { msg: 'ok' }
+    try {
+      const data = ctx.request.body
+      console.log(data)
+      if (!data?.chinesName || !data?.pinyinName) {
+        throw Error('参数不完整')
+      }
+      const user = new User()
+      Object.assign(user, data)
+      User.save(user)
+      ctx.body = { msg: 'ok' }
+    } catch (error) {
+      ctx.body = { msg: error.toString() }
+    }
   }
   @Get('/user/:id')
-  async getUserById(ctx: Context){
-    const user = new User()
-    user.id = 1
-    const result = await User.findOne(user)
-    ctx.body = result
+  async getUserById(ctx: Context) {
+    try {
+      const user = new User()
+      Object.assign(user, ctx.params)
+      const result = await User.findOne(user)
+      ctx.body = result
+    } catch (error) {
+      ctx.body = { msg: error.toString() }
+    }
   }
 }
