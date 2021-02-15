@@ -5,22 +5,22 @@ export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number
 
-  @Column()
+  @Column({unique: true})
   account: string
 
   @Column()
   password: string
 
-  @Column()
+  @Column({default: ''})
   email: string;
 
-  @Column()
+  @Column({default: ''})
   avatar: string;
 
-  @Column()
+  @Column({default: ''})
   chinesName: string
 
-  @Column()
+  @Column({default: ''})
   pinyinName: string
 
 }

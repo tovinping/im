@@ -1,6 +1,6 @@
 import { Server, Socket } from 'socket.io'
 const socketMap = new Map()
-export function initSocketIO(server: any) {
+export function loadSocket(server: any) {
   const io = new Server(server, { cors: { origin: '*' } })
   io.use((socket, next) => {
     let auth = socket.handshake.auth as any

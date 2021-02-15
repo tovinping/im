@@ -6,11 +6,15 @@ import { Get, Post } from '../router'
 export default class UserController {
   @Get('/users')
   async getUsers(ctx: Context) {
-    const users = await User.find()
-    ctx.body = users
+    try {
+      const users = await User.find()
+      ctx.success(users)
+    } catch (error) {
+      ctx.error(error.toString())
+    }
   }
   @Post('/user')
-  addUser(ctx: Context) {
+  async addUser(ctx: Context) {
     try {
       const data = ctx.request.body
       if (!data.account || !data.password) {
@@ -18,10 +22,10 @@ export default class UserController {
       }
       const user = new User()
       Object.assign(user, { ...data, password: md5(data.password) })
-      User.save(user)
-      ctx.body = { msg: 'ok' }
+      await User.save(user)
+      ctx.success()
     } catch (error) {
-      ctx.body = { msg: error.toString() }
+      ctx.error(error.toString())
     }
   }
   @Get('/user/:id')
@@ -30,9 +34,25 @@ export default class UserController {
       const user = new User()
       Object.assign(user, ctx.params)
       const result = await User.findOne(user)
-      ctx.body = result
+      ctx.success(result)
     } catch (error) {
-      ctx.body = { msg: error.toString() }
+      ctx.error(error.toString())
+    }
+  }
+  @Post('/user/delete')
+  async removeUser(ctx: Context) {
+    try {
+      ctx.success({})
+    } catch (error) {
+      ctx.error(error.toString())
+    }
+  }
+  @Post('/user/update')
+  async update(ctx: Context) {
+    try {
+      ctx.success({})
+    } catch (error) {
+      ctx.error(error.toString())
     }
   }
 }
