@@ -1,6 +1,7 @@
 import { Context } from 'koa'
+import * as md5 from 'md5'
 import { User } from '../models/User'
-import { Get, Post } from '../routes'
+import { Get, Post } from '../router'
 
 export default class UserController {
   @Get('/users')
@@ -12,12 +13,11 @@ export default class UserController {
   addUser(ctx: Context) {
     try {
       const data = ctx.request.body
-      console.log(data)
-      if (!data?.chinesName || !data?.pinyinName) {
+      if (!data.account || !data.password) {
         throw Error('参数不完整')
       }
       const user = new User()
-      Object.assign(user, data)
+      Object.assign(user, { ...data, password: md5(data.password) })
       User.save(user)
       ctx.body = { msg: 'ok' }
     } catch (error) {
