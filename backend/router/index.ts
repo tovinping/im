@@ -1,7 +1,7 @@
 import * as Router from 'koa-router'
 const router = new Router()
 export async function loadRouter(app: any) {
-  import('../controller/User')
+  await import('../controller/User')
   app.use(router.routes())
 }
 export function Get(url: string) {

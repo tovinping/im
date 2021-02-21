@@ -4,7 +4,7 @@ import { User } from '../models/User'
 import { Get, Post } from '../router'
 
 export default class UserController {
-  @Get('/users')
+  @Get('/user/list')
   async getUsers(ctx: Context) {
     try {
       const users = await User.find()
@@ -13,7 +13,7 @@ export default class UserController {
       ctx.error(error.toString())
     }
   }
-  @Post('/user')
+  @Post('/user/add')
   async addUser(ctx: Context) {
     try {
       const data = ctx.request.body
@@ -28,7 +28,7 @@ export default class UserController {
       ctx.error(error.toString())
     }
   }
-  @Get('/user/:id')
+  @Get('/user/byId')
   async getUserById(ctx: Context) {
     try {
       const user = new User()
@@ -53,6 +53,25 @@ export default class UserController {
       ctx.success({})
     } catch (error) {
       ctx.error(error.toString())
+    }
+  }
+  @Post('/user/login')
+  async login(ctx: Context) {
+    try {
+      const { account, password } = JSON.parse(ctx.request.body)
+      if (!account || !password) {
+        ctx.error('参数不完整')
+        return
+      }
+      const result = await User.findOne({ where: { account, password: md5(password) } })
+      if (result) {
+        ctx.success({ timestamp: Date.now() })
+      } else {
+        ctx.error('登录失败,请检查帐号和密码是否正确')
+      }
+    } catch (error) {
+      console.log(error.toString())
+      ctx.error('登录失败,请检查帐号密码是否正确')
     }
   }
 }

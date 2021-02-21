@@ -6,10 +6,6 @@ import { login } from 'src/api/user'
 import TopBar from 'src/components/TopBar'
 import socketClient from 'src/utils/clientSocket'
 import style from './login.module.scss'
-window.addEventListener('unload', () => {
-  console.log('page will unload')
-  alert('aaa')
-})
 export default function Login() {
   const history = useHistory()
   const [account, setAccount] = useState('')
@@ -23,7 +19,7 @@ export default function Login() {
     setLoading(true)
     const data = await login({ account, password })
     setLoading(false)
-    if (data) {
+    if (!data.code) {
       console.log(data)
       globalDispatch({ type: 'updateGlobal', payload: { isLogin: true, account } })
       socketClient.init(account)

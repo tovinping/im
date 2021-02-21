@@ -1,5 +1,5 @@
-import {get} from '../utils/fetch'
-import {ILoginReq, ILoginRes} from '../interface/login'
+import { post } from '../utils/fetch'
+import { ILoginReq, ILoginRes } from '../interface/login'
 export function login(data: ILoginReq) {
-  return get<ILoginRes>('/login', data)
+  return post<ILoginRes>('/user/login', data)
 }

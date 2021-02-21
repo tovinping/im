@@ -7,3 +7,9 @@ export type ITransferActions<T> = {
 export interface IAnyObj<T = any> {
   [K: string]: T
 }
+
+export interface IResBase<T = any> {
+  code: 0 | 1 // 0成功1失败
+  data: T | null
+  msg: string
+}
