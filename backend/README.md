@@ -12,3 +12,6 @@ config.json:
     "models/*.ts"
   ]
 }
+
+## ERROR:
+* ER_NOT_SUPPORTED_AUTH_MODE https://github.com/mysqljs/mysql/issues/1507#issuecomment-385224467

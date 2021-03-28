@@ -1,11 +1,11 @@
 import React from 'react'
 import classnames from 'classnames'
-import {useSelector, globalDispatch} from 'src/store'
+import {useRootState, globalDispatch} from 'src/store'
 import { IConversation } from 'src/interface/conversation'
 import defaultAvatar from 'src/resource/images/avatar1.jpg'
 import style from './Item.module.scss'
 export default function ConversationItem(props: IConversation) {
-  const currentId = useSelector(state => state.conversation.current.id)
+  const currentId = useRootState(state => state.conversation.current.id)
   function handleClick() {
     globalDispatch({type: 'setCurrentConversation', payload: props})
   }

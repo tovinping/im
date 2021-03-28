@@ -1,9 +1,9 @@
 import React from 'react'
 import Icon from 'src/components/Icon'
-import { useSelector } from 'src/store'
+import { useRootState } from 'src/store'
 import style from './index.module.scss'
 export default function TopBar() {
-  const { windowSize } = useSelector((state) => state.global)
+  const { windowSize } = useRootState(state => state.global)
   const handleChangeWindowSize = () => {
     console.log('windowSize', windowSize)
     if (windowSize === 'maxSize') {

@@ -23,5 +23,5 @@ createConnection(mysqlConfig)
     })
   })
   .catch((err) => {
-    console.error(err)
+    console.error(err, mysqlConfig)
   })

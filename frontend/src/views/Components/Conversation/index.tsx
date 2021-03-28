@@ -1,8 +1,8 @@
 import React from 'react'
-import {useSelector} from 'src/store'
+import {useRootState} from 'src/store'
 import Item from './Item'
 
 export default function Conversation() {
-  const conversations = useSelector(state => state.conversation.list)
+  const conversations = useRootState(state => state.conversation.list)
   return <div>{conversations.map(item => <Item key={item.id} {...item} />)}</div>
 }
