@@ -1,9 +1,6 @@
+import {IBaseConversation} from '../../../typing/conversation'
 import {ITransferActions} from '../interface'
-export interface IConversation {
-  id: string
-  name: string
-  type: 0 | 1 // 0单聊1群聊
-  lastMsg?: string
+export interface IConversation extends IBaseConversation {
   timestamp?: number
   draft?: string
   unRead?: number

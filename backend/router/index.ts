@@ -2,6 +2,7 @@ import * as Router from 'koa-router'
 const router = new Router()
 export async function loadRouter(app: any) {
   await import('../controller/User')
+  await import('../controller/Conversation')
   app.use(router.routes())
 }
 export function Get(url: string) {

@@ -1,4 +1,3 @@
-/// <reference path="../../typing/window.ts" />
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux';
@@ -6,7 +5,6 @@ import Router from './views/Router'
 import store from './store'
 import reportWebVitals from './reportWebVitals'
 import './index.css'
-import 'antd/dist/antd.css'
 import './resource/scss/reset.scss'
 import './utils/eventHandle'
 

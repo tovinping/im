@@ -1,10 +1,8 @@
 import React, { useState } from 'react'
 import { Button, Input, message, Spin } from 'antd'
 import { useHistory } from 'react-router'
-import { globalDispatch } from 'src/store'
-import { login } from 'src/api/user'
 import TopBar from 'src/components/TopBar'
-import socketClient from 'src/utils/clientSocket'
+import {global} from 'src/utils'
 import style from './login.module.scss'
 export default function Login() {
   const history = useHistory()
@@ -12,17 +10,14 @@ export default function Login() {
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   async function doLogin() {
-    if (!account.trim() || !password.trim()) {
-      message.error('请输入用户名和密码', 1)
-      return
-    }
+    if (!account.trim() || !password.trim()) return;
     setLoading(true)
-    const data = await login({ account, password })
+    const result = await global.doLogin({account, password})
+    console.log('loginResult', result);
     setLoading(false)
-    if (!data.code) {
-      console.log(data)
-      globalDispatch({ type: 'updateGlobal', payload: { isLogin: true, account } })
-      socketClient.init(account)
+    if (result.code === 1) {
+      message.error(result.msg, 1)
+    } else {
       history.push('/chat')
     }
   }

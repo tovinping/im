@@ -1,10 +1,9 @@
-type IConversationType = 0 | 1 // 0单聊1群聊
+import {IBaseMsg} from './message'
+type ITopState = '0' | '1'
+type IConversationType = '0' | '1' // 0单聊1群聊
 export interface IBaseConversation {
   id: string
-  name: string
   type: IConversationType
-  lastMsg?: string
-  timestamp?: number
-  draft?: string
-  unRead?: number
+  lastMsg?: IBaseMsg
+  topState: ITopState
 }

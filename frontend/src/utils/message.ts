@@ -1,25 +1,33 @@
-import { IMsgParam, IMsgItem} from 'src/interface/message'
-import {globalDispatch, globalState} from 'src/store'
-import Socket from './clientSocket'
-let count = 1
-export function createMsgParam(conversationId: string, data: Partial<IMsgItem>): IMsgParam {
-  const senderId = globalState.global.account
+import { IMessage } from 'src/interface'
+import clientSocket from './clientSocket'
+import { getRandomStr } from './'
+
+interface ICreateMsgTemplate {
+  receiveId: string
+  data: Partial<IMessage.IMsg>
+}
+export function createMsgTemplate({ receiveId, data }: ICreateMsgTemplate): IMessage.IMsg {
+  const senderId = window.$state.global.account
   return {
-    msgId: `${count}`,
-    msgType: 0,
-    conversationId,
+    id: getRandomStr(),
+    timestamp: Date.now(),
+    type: 0,
+    state: 0,
     senderId,
-    ...data
+    owner: senderId,
+    receiveId,
+    content: '',
+    ...data,
   }
 }
 
-export function sendTextMsg(conversationId: string, content: string) {
-  Socket.sendTextMsg(createMsgParam(conversationId, {content}))
+export function sendTextMsg(receiveId: string, content: string) {
+  clientSocket.sendTextMsg(createMsgTemplate({ receiveId, data: { content } }))
 }
 
-export function handleReceiveMsg(data: IMsgParam) {
+export function handleReceiveMsg(data: IMessage.IMsg) {
   console.log('handleReceiveMsg', data)
-  if (data && data.conversationId) {
-    globalDispatch({type: 'appendMsg', payload: data})
+  if (data && data.senderId) {
+    window.$dispatch({ type: 'appendMsg', payload: data })
   }
 }

@@ -3,7 +3,9 @@ import Close from './Close'
 import MaxSize from './MaxSize'
 import MinSize from './MinSize'
 import NormalSize from './NormalSize'
+import Plus from './Plus'
 const SvgMap = {
+  Plus,
   Close,
   MaxSize,
   MinSize,

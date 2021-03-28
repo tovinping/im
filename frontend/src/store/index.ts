@@ -4,21 +4,24 @@ import { createSelectorHook } from 'react-redux'
 import global from './global'
 import conversation from './conversation'
 import message from './message'
+import user from './user'
 
 const rootReducer = combineReducers({
+  user,
   global,
   conversation,
   message
 })
 const store = createStore(rootReducer)
 
-type IRootState = ReturnType< typeof rootReducer>
+export type IRootStateType = ReturnType<typeof rootReducer>
+export type IRootDispatchType = typeof store.dispatch
 
-export let globalState = store.getState()
+window.$state = store.getState()
 store.subscribe(() => {
-  globalState = store.getState()
+  window.$state = store.getState()
 })
-export const globalDispatch = store.dispatch
-export const useRootState = createSelectorHook<IRootState>()
+window.$dispatch = store.dispatch
+export const useRootState = createSelectorHook<IRootStateType>()
 
 export default store

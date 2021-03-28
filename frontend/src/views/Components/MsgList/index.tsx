@@ -9,7 +9,7 @@ export default function MsgList() {
   return (
     <div>
       {msgList.map(item => (
-        <MsgItem key={item.msgId} {...item} />
+        <MsgItem key={item.id} {...item} />
       ))}
     </div>
   )

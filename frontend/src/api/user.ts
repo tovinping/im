@@ -1,5 +1,9 @@
-import { post } from '../utils/fetch'
-import { ILoginReq, ILoginRes } from '../interface/login'
-export function login(data: ILoginReq) {
-  return post<ILoginRes>('/user/login', data)
+import { get } from '../utils/fetch'
+import { IUser } from '../interface'
+interface IGetContactList {
+  pageNo: number
+  pageSize: number
+}
+export function getContactList(params: IGetContactList) {
+  return get<IUser.IUser[]>('/user/list', params)
 }

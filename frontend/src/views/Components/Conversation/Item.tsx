@@ -1,13 +1,13 @@
 import React from 'react'
 import classnames from 'classnames'
-import {useRootState, globalDispatch} from 'src/store'
-import { IConversation } from 'src/interface/conversation'
+import {useRootState} from 'src/store'
+import { IConversation } from 'src/interface'
 import defaultAvatar from 'src/resource/images/avatar1.jpg'
 import style from './Item.module.scss'
-export default function ConversationItem(props: IConversation) {
+export default function ConversationItem(props: IConversation.IConversation) {
   const currentId = useRootState(state => state.conversation.current.id)
   function handleClick() {
-    globalDispatch({type: 'setCurrentConversation', payload: props})
+    window.$dispatch({type: 'setCurrentConversation', payload: props})
   }
   return (
     <div className={classnames(style.itemContainer, currentId === props.id && style.active)} onClick={handleClick}>
@@ -15,7 +15,6 @@ export default function ConversationItem(props: IConversation) {
         <img src={defaultAvatar} alt="" />
       </div>
       <div>
-        <div>{props.name}</div>
         <div>{props.lastMsg}</div>
       </div>
     </div>

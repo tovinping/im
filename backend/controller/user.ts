@@ -39,7 +39,7 @@ export default class UserController {
       ctx.error(error.toString())
     }
   }
-  @Post('/user/delete')
+  @Post('/user/remove')
   async removeUser(ctx: Context) {
     try {
       ctx.success({})
