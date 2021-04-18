@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react'
 import { useRootState } from 'src/store'
+import style from './index.module.scss'
 interface IProps {
   selected?: string[]
   maxNum: number
@@ -18,9 +19,9 @@ export default function SelectContact(props: IProps) {
     return list
   }, [userMap])
   return (
-    <ul>
+    <ul className={style.contactSelect}>
       {contactList.map(item => (
-        <li>{item.account}</li>
+        <li key={item.account} onClick={() => props.callback([item])}>{item.chinesName}</li>
       ))}
     </ul>
   )

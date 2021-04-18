@@ -1,10 +1,10 @@
 import { IConversationState, IActions, IConversation } from 'src/interface/conversation'
 const initialState: IConversationState = {
   list: [],
-  current: {},
+  current: undefined,
 }
 function getCurrent(data: IConversation) {
-  return initialState.current.id === data.id ? data : initialState.current
+  return initialState.current?.id === data.id ? data : initialState.current
 }
 export default function reducer(
   state = initialState,
@@ -23,6 +23,8 @@ export default function reducer(
         item.id === actions.payload.id ? actions.payload : item
       )
       return { ...state, list: uList, current: getCurrent(actions.payload) }
+    case 'addConversation':
+      return {...state, list: state.list.concat(actions.payload)}
     default:
       return { ...state }
   }

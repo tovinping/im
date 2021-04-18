@@ -1,4 +1,5 @@
 import { IMessage } from 'src/interface'
+import {getCovIdByMsg} from 'src/utils/message'
 const initialState: IMessage.IMsgState = {}
 export default function reducer(
   state = initialState,
@@ -6,8 +7,9 @@ export default function reducer(
 ): IMessage.IMsgState {
   switch (actions.type) {
     case 'appendMsg':
-      const newData = (state[actions.payload.senderId] || []).concat(actions.payload)
-      return { ...state, [actions.payload.senderId]: newData }
+      const covId = getCovIdByMsg(actions.payload) || 'undefined'
+      const newData = (state[covId] || []).concat(actions.payload)
+      return { ...state, [covId]: newData }
     default:
       return state
   }

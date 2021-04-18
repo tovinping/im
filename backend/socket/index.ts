@@ -7,6 +7,7 @@ export function loadSocket(server: any) {
     if (!auth.token) {
       next(new Error('token error'))
     } else {
+      console.log('CCC=', auth.token)
       socketMap.set(auth.token, socket)
       next()
     }
@@ -14,11 +15,11 @@ export function loadSocket(server: any) {
 
   io.on('connection', (socket: Socket) => {
     socket.on('message', (msg: any, cb) => {
-      const socketItem = socketMap.get(msg.conversationId)
+      const socketItem = socketMap.get(msg.receiveId)
       if (socketItem) { // 在线消息
         socketItem.send(msg)
       } else { // 离线消息
-        console.log('离线消息')
+        console.log('离线消息', msg.receiveId)
       }
       cb({ msg: 'ok' })
     })

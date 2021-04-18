@@ -6,16 +6,21 @@ import {sendTextMsg} from 'src/utils/message'
 import style from './index.module.scss'
 
 export default function Editor() {
-  const currentConversation = useRootState(state => state.conversation.current)
+  const current = useRootState(state => state.conversation.current)
   const editRef = useRef<HTMLDivElement>(null)
   function handSend() {
+    if (!current) return;
     const text = editRef.current?.innerText
     if (!text?.trim()) {
       message.error('不能发送空消息呀')
       return
     }
     editRef.current!.innerHTML = ''
-    sendTextMsg(currentConversation.id!, text)
+    sendTextMsg({
+      receiveId: current.id,
+      chatType: current.type,
+      content: text
+    })
   }
   return (
     <div className={style.editorContainer}>

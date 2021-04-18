@@ -5,7 +5,8 @@ import { IConversation } from 'src/interface'
 import defaultAvatar from 'src/resource/images/avatar1.jpg'
 import style from './Item.module.scss'
 export default function ConversationItem(props: IConversation.IConversation) {
-  const currentId = useRootState(state => state.conversation.current.id)
+  const currentId = useRootState(state => state.conversation.current?.id)
+  const userInfo = useRootState(state => state.user[props.id])
   function handleClick() {
     window.$dispatch({type: 'setCurrentConversation', payload: props})
   }
@@ -15,6 +16,7 @@ export default function ConversationItem(props: IConversation.IConversation) {
         <img src={defaultAvatar} alt="" />
       </div>
       <div>
+        <div>{userInfo?.chinesName || ''}</div>
         <div>{props.lastMsg}</div>
       </div>
     </div>

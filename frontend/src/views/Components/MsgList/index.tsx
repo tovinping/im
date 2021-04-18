@@ -4,7 +4,7 @@ import MsgItem from '../MsgItem'
 
 export default function MsgList() {
   const message = useRootState(state => state.message)
-  const currentConversationId = useRootState(state => state.conversation.current.id)
+  const currentConversationId = useRootState(state => state.conversation.current?.id)
   const msgList = message[currentConversationId!] || []
   return (
     <div>

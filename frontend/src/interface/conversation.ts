@@ -7,11 +7,16 @@ export interface IConversation extends IBaseConversation {
 }
 export interface IConversationState {
   list: IConversation[]
-  current: Partial<IConversation>
+  current: IConversation | undefined
 }
+
+export type ICreateType = Required<Pick<IConversation, 'id' | 'type'>> & Partial<IConversation>
+
+export type IUpdateType = Required<Pick<IConversation, 'id'>> & Partial<IConversation>
 
 interface IActionsMap {
   setConversationList: IConversation[]
+  addConversation: IConversation
   updateConversation: IConversation
   removeConversation: IConversation
   setCurrentConversation: IConversation
