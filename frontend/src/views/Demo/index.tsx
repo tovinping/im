@@ -1,14 +1,16 @@
 import React from 'react'
-import Dialog from './Dialog'
-import DialogItem from './DialogItem'
+// import Dialog from './Dialog'
+// import DialogItem from './DialogItem'
+import {success} from 'src/components/Message'
 import './index.css'
 
 function App() {
+  function handleClick() {
+    success({title: 'TTT', content: 'bbb'})
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <Dialog content={<DialogItem />} />
-      </header>
+      <button onClick={handleClick}>Test</button>
     </div>
   )
 }
