@@ -3,6 +3,9 @@ const router = new Router()
 export async function loadRouter(app: any) {
   await import('../controller/User')
   await import('../controller/Conversation')
+  await import('../controller/GroupInfo')
+  await import('../controller/GroupMember')
+  await import('../controller/GroupList')
   app.use(router.routes())
 }
 export function Get(url: string) {

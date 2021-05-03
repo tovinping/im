@@ -1,4 +1,4 @@
-import { Entity, BaseEntity, Column, PrimaryGeneratedColumn } from 'typeorm'
+import { Entity, BaseEntity, Column, PrimaryGeneratedColumn, } from 'typeorm'
 
 @Entity()
 export class Group extends BaseEntity {
@@ -11,16 +11,13 @@ export class Group extends BaseEntity {
   @Column()
   name: string
 
-  @Column()
+  @Column({default: '0'})
   state: '0' | '1' //0正常1已解散
 
-  @Column()
-  muteState: '0' | '1' // 0正常1全员禁言
-
-  @Column()
+  @Column({default: ''})
   avatar: string
 
-  @Column()
+  @Column({default: ''})
   notice: string
 
   @Column({default: ''})

@@ -19,11 +19,13 @@
     "mysql": "^2.18.1",
     "reflect-metadata": "^0.1.13",
     "socket.io": "^3.0.4",
-    "typeorm": "^0.2.31"
+    "typeorm": "^0.2.31",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@types/koa": "^2.11.6",
     "@types/koa-router": "^7.4.1",
-    "@types/koa2-cors": "^2.0.1"
+    "@types/koa2-cors": "^2.0.1",
+    "@types/uuid": "^8.3.0"
   }
 }

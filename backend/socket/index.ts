@@ -7,7 +7,6 @@ export function loadSocket(server: any) {
     if (!auth.token) {
       next(new Error('token error'))
     } else {
-      console.log('CCC=', auth.token)
       socketMap.set(auth.token, socket)
       next()
     }
