@@ -7,6 +7,7 @@ import { loadSocket } from './socket'
 import { loadRouter } from './router'
 import { loadMiddleware } from './middleware'
 import { mysqlConfig } from './config'
+import './typings'
 createConnection(mysqlConfig)
   .then(async () => {
     const app = new Koa()

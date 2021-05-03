@@ -11,13 +11,13 @@ export class Conversation extends BaseEntity {
   @Column()
   owner: string;
 
-  @Column()
-  type: '0' | '1'
+  @Column({default: '0'})
+  type: '0' | '1' // 0单聊1群聊天
 
   @Column({default: ''})
   lastMsgId: string;
 
-  @Column()
+  @Column({default: '0'})
   topState: '0' | '1';
 
 }

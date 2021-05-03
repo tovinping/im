@@ -1,38 +1,57 @@
 import { Context } from 'koa'
 import * as md5 from 'md5'
+import { CannotExecuteNotConnectedError } from 'typeorm'
 import { Conversation } from '../models/Conversation'
 import { Get, Post } from '../router'
 
 export default class UserController {
   @Get('/conversation/list')
-  async getConversations(ctx: Context) {
+  async getConversations(ctx: KoaCtx) {
     try {
       if (!ctx.query.account) {
         ctx.error('我说没有数据你信吗?')
       }
-      const users = await Conversation.find({where: {owner: ctx.query.account}})
-      ctx.success(users)
+      const conversations = await Conversation.find({where: {owner: ctx.query.account}})
+      ctx.success(conversations)
+    } catch (error) {
+      ctx.error(error.toString())
+    }
+  }
+  @Get('/conversation/id')
+  async getConversationInfo(ctx: KoaCtx) {
+    try {
+      const {conversationId, owner} = ctx.query
+      if (!conversationId) {
+        ctx.error('参数错误')
+      }
+      const conversation = await Conversation.findOne({where: {owner, conversationId}})
+      ctx.success(conversation)
     } catch (error) {
       ctx.error(error.toString())
     }
   }
   @Post('/conversation/add')
-  async addConversation(ctx: Context) {
+  async addConversation(ctx: KoaCtx) {
     try {
-      const data = ctx.request.body
-      if (!data.account || !data.password) {
+      const {conversationId, owner} = ctx.request.body
+      if (!conversationId || !owner) {
         throw Error('参数不完整')
       }
-      const user = new Conversation()
-      Object.assign(user, { ...data, password: md5(data.password) })
-      await Conversation.save(user)
-      ctx.success()
+      const conversation = Conversation.findOne({where: {conversationId, owner}})
+      if (conversation) {
+        ctx.success(conversation)
+      } else {
+        const conversation = new Conversation()
+        Object.assign(conversation, { conversationId, owner})
+        await Conversation.save(conversation)
+        ctx.success(conversation)
+      }
     } catch (error) {
       ctx.error(error.toString())
     }
   }
   @Post('/conversation/remove')
-  async removeConversation(ctx: Context) {
+  async removeConversation(ctx: KoaCtx) {
     try {
       ctx.success({})
     } catch (error) {
@@ -40,7 +59,7 @@ export default class UserController {
     }
   }
   @Post('/conversation/update')
-  async update(ctx: Context) {
+  async update(ctx: KoaCtx) {
     try {
       ctx.success({})
     } catch (error) {

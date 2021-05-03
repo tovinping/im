@@ -1,4 +1,3 @@
-import { Context } from 'koa'
 import { getManager } from 'typeorm'
 import { Group } from '../models/GroupInfo'
 import { GroupMember } from '../models/GroupMember'
@@ -7,7 +6,7 @@ import { generateGroupId } from '../utils'
 
 export default class UserController {
   @Get('/group/list')
-  async getGroups(ctx: Context) {
+  async getGroups(ctx: KoaCtx) {
     try {
       if (!ctx.query.account) {
         ctx.error('我说没有数据你信吗?')
@@ -19,7 +18,7 @@ export default class UserController {
     }
   }
   @Post('/group/add')
-  async addGroup(ctx: Context) {
+  async addGroup(ctx: KoaCtx) {
     try {
       const data = ctx.request.body
       console.log(data)
@@ -51,7 +50,7 @@ export default class UserController {
     }
   }
   @Get('/group/byId')
-  async getGroupInfoById(ctx: Context) {
+  async getGroupInfoById(ctx: KoaCtx) {
     try {
       const user = new Group()
       Object.assign(user, ctx.params)
@@ -62,7 +61,7 @@ export default class UserController {
     }
   }
   @Post('/group/remove')
-  async removeGroup(ctx: Context) {
+  async removeGroup(ctx: KoaCtx) {
     try {
       ctx.success({})
     } catch (error) {
@@ -70,7 +69,7 @@ export default class UserController {
     }
   }
   @Post('/group/update')
-  async updateGroup(ctx: Context) {
+  async updateGroup(ctx: KoaCtx) {
     try {
       ctx.success({})
     } catch (error) {
