@@ -1,3 +1,3 @@
-export * as global from './global'
-export * as conversation from './conversation'
-export * as user from './user'
+export *  from './global'
+export * from './conversation'
+export * from './user'

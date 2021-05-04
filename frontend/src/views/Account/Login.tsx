@@ -2,18 +2,18 @@ import React, { useState } from 'react'
 import { Button, Input, message, Spin } from 'antd'
 import { useHistory } from 'react-router'
 import TopBar from 'src/components/TopBar'
-import {global} from 'src/utils'
+import { doLogin } from 'src/utils'
 import style from './login.module.scss'
 export default function Login() {
   const history = useHistory()
   const [account, setAccount] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
-  async function doLogin() {
-    if (!account.trim() || !password.trim()) return;
+  async function handDoLogin() {
+    if (!account.trim() || !password.trim()) return
     setLoading(true)
-    const result = await global.doLogin({account, password})
-    console.log('loginResult', result);
+    const result = await doLogin({ account, password })
+    console.log('loginResult', result)
     setLoading(false)
     if (result.code === 1) {
       message.error(result.msg, 1)
@@ -32,17 +32,17 @@ export default function Login() {
           <div className={style.account}>
             <div>用户名</div>
             <div className={style.input}>
-              <Input placeholder={'请输入用户名'} onChange={(evt) => setAccount(evt.target.value)} />
+              <Input placeholder={'请输入用户名'} onChange={evt => setAccount(evt.target.value)} />
             </div>
           </div>
           <div className={style.password}>
             <div>密&nbsp;&nbsp;&nbsp;&nbsp;码</div>
             <div className={style.input}>
-              <Input placeholder={'请输入密码'} type={'password'} onChange={(evt) => setPassword(evt.target.value)} />
+              <Input placeholder={'请输入密码'} type={'password'} onChange={evt => setPassword(evt.target.value)} />
             </div>
           </div>
           <div className={style.loginBtn}>
-            <Button type="primary" block size="large" onClick={doLogin}>
+            <Button type="primary" block size="large" onClick={handDoLogin}>
               登录
             </Button>
           </div>

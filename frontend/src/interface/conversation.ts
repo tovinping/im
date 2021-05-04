@@ -10,9 +10,9 @@ export interface IConversationState {
   current: IConversation | undefined
 }
 
-export type ICreateType = Required<Pick<IConversation, 'id' | 'type'>> & Partial<IConversation>
+export type ICreateType = Required<Pick<IConversation, 'conversationId' | 'type' | 'topState'>> & Partial<IConversation>
 
-export type IUpdateType = Required<Pick<IConversation, 'id'>> & Partial<IConversation>
+export type IUpdateType = Required<Pick<IConversation, 'conversationId'>> & Partial<IConversation>
 
 interface IActionsMap {
   setConversationList: IConversation[]
@@ -21,4 +21,4 @@ interface IActionsMap {
   removeConversation: IConversation
   setCurrentConversation: IConversation
 }
-export type IActions = ITransferActions<IActionsMap>[keyof IActionsMap]
+export type IConversationActions = ITransferActions<IActionsMap>[keyof IActionsMap]

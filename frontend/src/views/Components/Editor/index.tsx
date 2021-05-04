@@ -17,7 +17,7 @@ export default function Editor() {
     }
     editRef.current!.innerHTML = ''
     sendTextMsg({
-      receiveId: current.id,
+      receiveId: current.conversationId,
       chatType: current.type,
       content: text
     })

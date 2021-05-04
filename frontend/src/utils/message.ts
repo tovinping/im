@@ -1,10 +1,9 @@
-import { IMessage } from 'src/interface'
+import { IMsg } from 'src/interface'
 import clientSocket from './clientSocket'
-import {createConversation} from './conversation'
-import { getRandomStr } from './'
+import { getRandomStr, checkConversation } from './'
 
-type ISendType = Pick<IMessage.IMsg, 'receiveId' | 'content' | 'chatType'>
-export function createMsgTemplate(data: ISendType): IMessage.IMsg {
+type ISendType = Pick<IMsg, 'receiveId' | 'content' | 'chatType'>
+export function createMsgTemplate(data: ISendType): IMsg {
   const senderId = window.$state.global.account
   return {
     id: getRandomStr(),
@@ -17,27 +16,36 @@ export function createMsgTemplate(data: ISendType): IMessage.IMsg {
     content: data.content
   }
 }
+/**
+ * 统一发送消息
+ * @param data 
+ */
+function sendMsg(data: any) {
+  return clientSocket.sendTextMsg(data)
+}
 
 export function sendTextMsg({receiveId, content, chatType}: Required<ISendType>) {
   const data = createMsgTemplate({receiveId, chatType, content })
+  sendMsg(data);
   window.$dispatch({type: 'appendMsg', payload: data})
-  clientSocket.sendTextMsg(data)
 }
 
-export function handleReceiveMsg(data: IMessage.IMsg) {
+export function handleReceiveMsg(data: IMsg) {
   console.log('handleReceiveMsg', data)
-  if (data && data.senderId) {
+  if (data?.senderId) {
     window.$dispatch({ type: 'appendMsg', payload: data })
   }
-  // 没有此会话需要创建
-  const covId = getCovIdByMsg(data)
-  const covItem = window.$state.conversation.list.find(cov => cov.id === covId)
-  if (!covItem && covId) {
-    createConversation({id: covId, type: data.chatType})
+  const conversationId = getCovIdByMsg(data)
+  if (!conversationId) return;
+  // 判断是否需要创建会话
+  if (data.groupId) {
+    checkConversation({conversationId, type: '1', create: true})
+  } else {
+    checkConversation({conversationId, type: '0', create: true})
   }
 }
 
-export function getCovIdByMsg(data: IMessage.IMsg) {
+export function getCovIdByMsg(data: IMsg) {
   const myId = window.$state.global.account
   return data.chatType === '1' ? data.groupId : data.receiveId === myId ? data.senderId : data.receiveId
 }

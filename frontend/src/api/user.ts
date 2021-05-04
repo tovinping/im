@@ -5,5 +5,5 @@ interface IGetContactList {
   pageSize: number
 }
 export function getContactList(params: IGetContactList) {
-  return get<IUser.IUser[]>('/user/list', params)
+  return get<IUser[]>('/user/list', params)
 }

@@ -1,8 +1,8 @@
 import { IRootDispatchType, IRootStateType } from 'src/store'
-export * as IUser from './user'
-export * as IGlobal from './global'
-export * as IConversation from './conversation'
-export * as IMessage from './message'
+export * from './user'
+export * from './global'
+export * from './conversation'
+export * from './message'
 export type ITransferActions<T> = {
   [K in keyof T]: {
     type: K

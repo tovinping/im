@@ -12,4 +12,4 @@ interface IActionsMap {
   updateLogin: IGlobalState['isLogin']
   updateAccount: IGlobalState['account']
 }
-export type IActions = ITransferActions<IActionsMap>[keyof IActionsMap]
+export type IGlobalActions = ITransferActions<IActionsMap>[keyof IActionsMap]

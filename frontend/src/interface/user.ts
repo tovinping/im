@@ -6,4 +6,4 @@ export type IUserState = Record<string, IUser | undefined>
 interface IActionsMap {
   setUserMap: IUserState
 }
-export type IActions = ITransferActions<IActionsMap>[keyof IActionsMap]
+export type IUserActions = ITransferActions<IActionsMap>[keyof IActionsMap]

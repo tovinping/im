@@ -1,11 +1,11 @@
 import React from 'react'
 import classnames from 'classnames'
-import { IMessage } from 'src/interface'
+import { IMsg } from 'src/interface'
 import { useRootState } from 'src/store'
 import MsgText from '../MsgItemText'
 import style from './index.module.scss'
 
-export default function MsgItem(props: IMessage.IMsg) {
+export default function MsgItem(props: IMsg) {
   const myId = useRootState(state => state.global.account)
   const isMe = props.senderId === myId
   return (

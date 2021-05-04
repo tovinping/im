@@ -1,10 +1,10 @@
-import { IMessage } from 'src/interface'
+import { IMsgState, IMsgAction } from 'src/interface'
 import {getCovIdByMsg} from 'src/utils/message'
-const initialState: IMessage.IMsgState = {}
+const initialState: IMsgState = {}
 export default function reducer(
   state = initialState,
-  actions: IMessage.IMsgAction
-): IMessage.IMsgState {
+  actions: IMsgAction
+): IMsgState {
   switch (actions.type) {
     case 'appendMsg':
       const covId = getCovIdByMsg(actions.payload) || 'undefined'

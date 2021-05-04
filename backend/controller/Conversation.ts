@@ -1,6 +1,3 @@
-import { Context } from 'koa'
-import * as md5 from 'md5'
-import { CannotExecuteNotConnectedError } from 'typeorm'
 import { Conversation } from '../models/Conversation'
 import { Get, Post } from '../router'
 
@@ -33,18 +30,18 @@ export default class UserController {
   @Post('/conversation/add')
   async addConversation(ctx: KoaCtx) {
     try {
-      const {conversationId, owner} = ctx.request.body
-      if (!conversationId || !owner) {
+      const {conversationId, owner, type} = ctx.request.body
+      if (!conversationId || !owner || !type) {
         throw Error('参数不完整')
       }
-      const conversation = Conversation.findOne({where: {conversationId, owner}})
+      const conversation = await Conversation.findOne({where: {conversationId, owner, type}})
       if (conversation) {
         ctx.success(conversation)
       } else {
         const conversation = new Conversation()
-        Object.assign(conversation, { conversationId, owner})
-        await Conversation.save(conversation)
-        ctx.success(conversation)
+        Object.assign(conversation, { conversationId, owner, type})
+        const result = await Conversation.save(conversation)
+        ctx.success(result)
       }
     } catch (error) {
       ctx.error(error.toString())

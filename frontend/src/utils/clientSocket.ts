@@ -1,5 +1,5 @@
 import { Manager, Socket } from 'socket.io-client'
-import { IMessage } from 'src/interface'
+import { IMsg } from 'src/interface'
 import { handleReceiveMsg } from 'src/utils/message'
 class ClientSocket {
   static socket: Socket
@@ -31,7 +31,7 @@ class ClientSocket {
   static createMsgBase() {
     return {}
   }
-  static sendTextMsg(data: IMessage.IMsg) {
+  static sendTextMsg(data: IMsg) {
     this.socket.send(data, (res: any) => {
       console.log('sendMsgResult:', res)
     })

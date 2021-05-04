@@ -1,14 +1,25 @@
-import React from 'react'
-import {useRootState} from 'src/store'
+import React, { useEffect } from 'react'
+import { useRootState } from 'src/store'
 import Item from './Item'
 import Search from './Search'
+import { getConversation } from 'src/utils'
 
 export default function Conversation() {
   const conversations = useRootState(state => state.conversation.list)
-  return <div>
+  const isLogin = useRootState(state => state.global.isLogin)
+  useEffect(() => {
+    if (isLogin) {
+      getConversation()
+    }
+  }, [isLogin])
+  return (
     <div>
-      <Search />
+      <div>
+        <Search />
+      </div>
+      {conversations.map(item => (
+        <Item key={item.conversationId} {...item} />
+      ))}
     </div>
-    {conversations.map(item => <Item key={item.id} {...item} />)}
-  </div>
+  )
 }

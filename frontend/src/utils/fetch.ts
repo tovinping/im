@@ -18,7 +18,13 @@ export async function get<T = any>(uri: string, payload: IAnyObj): Promise<IResB
 
 export async function post<T = any>(uri: string, payload: IAnyObj): Promise<IResBase<T>> {
   try {
-    const response = await fetch(config.baseUrl + uri, { method: 'post', body: JSON.stringify(payload) })
+    const response = await fetch(config.baseUrl + uri, {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8'
+      },
+      body: JSON.stringify(payload),
+    })
     return await response.json()
   } catch (error) {
     message.error('请求失败')

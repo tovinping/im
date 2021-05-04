@@ -1,4 +1,4 @@
-import { IGlobalState, IActions } from 'src/interface/global'
+import { IGlobalState, IGlobalActions } from 'src/interface/global'
 const initialState: IGlobalState = {
   isLogin: false,
   account: '',
@@ -7,7 +7,7 @@ const initialState: IGlobalState = {
 }
 export default function reducer(
   state = initialState,
-  actions: IActions
+  actions: IGlobalActions
 ): IGlobalState {
   switch (actions.type) {
     case 'updateGlobal':

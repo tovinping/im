@@ -58,7 +58,7 @@ export default class UserController {
   @Post('/user/login')
   async login(ctx: Context) {
     try {
-      const { account, password } = JSON.parse(ctx.request.body)
+      const { account, password } = ctx.request.body
       if (!account || !password) {
         ctx.error('参数不完整')
         return
