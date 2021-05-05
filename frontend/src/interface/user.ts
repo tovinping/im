@@ -1,5 +1,5 @@
 import { ITransferActions } from '.'
-import { IBaseUser } from '../../../typing/user'
+import { IBaseUser } from '../../../typings'
 export interface IUser extends IBaseUser{}
 export type IUserState = Record<string, IUser | undefined>
 

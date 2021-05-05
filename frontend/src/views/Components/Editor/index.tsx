@@ -22,6 +22,7 @@ export default function Editor() {
       content: text
     })
   }
+  if (!current?.conversationId) return null
   return (
     <div className={style.editorContainer}>
       <div className={style.editorExtends}>

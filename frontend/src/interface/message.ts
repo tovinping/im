@@ -1,5 +1,5 @@
 import {ITransferActions} from './'
-import {IBaseMsg} from '../../../typing/message'
+import {IBaseMsg} from '../../../typings'
 // export interface IMsgItem {
 //   msgId: string;
 //   conversationId: string;

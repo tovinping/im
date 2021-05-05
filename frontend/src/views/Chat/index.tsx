@@ -7,7 +7,7 @@ import Editor from '../Components/Editor'
 const style = require('./index.module.scss')
 export default function Chat() {
   const history = useHistory()
-  const isLogin = useRootState((state) => state.global.isLogin)
+  const isLogin = useRootState(state => state.global.isLogin)
   useEffect(() => {
     if (!isLogin) {
       history.replace('/')
@@ -19,12 +19,8 @@ export default function Chat() {
         <Conversation />
       </div>
       <div className={style.chatRight}>
-        <div className={style.msgListWrap}>
-          <MsgList />
-        </div>
-        <div className={style.editorWrap}>
-          <Editor />
-        </div>
+        <MsgList />
+        <Editor />
       </div>
     </div>
   )
