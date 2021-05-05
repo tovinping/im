@@ -1,23 +1,29 @@
 import React, { useState } from 'react'
-import { Input } from 'antd'
+import { Input, Modal } from 'antd'
 import ICon from 'src/components/Icon'
 import ContactSelect from 'src/components/ContactSelect'
 import style from './Search.module.scss'
 import { IUser } from 'src/interface'
-import { handCreateConversation } from 'src/utils'
+import { openOrCreateConversation } from 'src/utils'
+const selectedList: IUser[] = []
 export default function Search() {
   const [selectShow, setSelectShow] = useState(false)
-  const handlePlusClick = () => {
-    setSelectShow(true)
-    console.log('handlePlusClick')
+  const handleSelectChange = (data: IUser) => {
+    const index = selectedList.findIndex(item => item.account === data.account)
+    if (index>=0) {
+      selectedList.splice(index, 1)
+    } else {
+      selectedList.push(data)
+    }
   }
-  const handleSelectCallback = (list?: IUser[]) => {
+
+  const handOk = () => {
     setSelectShow(false)
-    if (!list || list?.length === 0) return
+    if (!selectedList || selectedList?.length === 0) return
     // 创建单聊
-    if (list?.length === 1) {
-      const item = list[0]
-      handCreateConversation({ conversationId: item.account, type: '0' })
+    if (selectedList?.length === 1) {
+      const conversationId = selectedList[0].account
+      openOrCreateConversation(conversationId, '0' )
     } else {
       // 创建群=>创建群会话
       console.log('创建群聊呀')
@@ -26,13 +32,10 @@ export default function Search() {
   return (
     <div className={style.search}>
       <Input placeholder={'搜索最近会话和联系人'} />
-      <ICon type={'Plus'} className={style.plus} onClick={handlePlusClick} />
-      {selectShow ? (
-        <div className={style.createConversation}>
-          <h3>创建会话</h3>
-          <ContactSelect maxNum={50} callback={handleSelectCallback} />
-        </div>
-      ) : null}
+      <ICon type={'Plus'} className={style.plus} onClick={() => setSelectShow(true)} />
+      <Modal visible={selectShow} onCancel={()=> setSelectShow(false)} onOk={handOk}>
+        <ContactSelect onChange={handleSelectChange} />
+      </Modal>
     </div>
   )
 }

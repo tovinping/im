@@ -7,7 +7,7 @@ export default class UserController {
   @Get('/user/list')
   async getUsers(ctx: Context) {
     try {
-      const users = await User.find()
+      const users = await User.find({select: ['_id', 'account', 'avatar', 'chinesName', 'email']})
       ctx.success(users)
     } catch (error) {
       ctx.error(error.toString())

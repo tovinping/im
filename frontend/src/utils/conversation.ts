@@ -31,3 +31,11 @@ export async function checkConversation(params: ICheckProps) {
   }
   return conversationInfo
 }
+
+// 打开或者创建会话
+export async function openOrCreateConversation(conversationId: string, type: IConversation['type']) {
+  const conversationInfo = await checkConversation({conversationId, type, create: true})
+  if (conversationInfo) {
+    window.$dispatch({type: 'setCurrentConversation', payload: conversationInfo})
+  }
+}

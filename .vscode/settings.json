@@ -1,1 +1,4 @@
-{}
+{
+  "workbench.editor.wrapTabs": true,
+  "workbench.editor.scrollToSwitchTabs": true
+}

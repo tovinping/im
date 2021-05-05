@@ -1,13 +1,16 @@
 import React, { useMemo } from 'react'
+import { Checkbox } from 'antd'
 import { useRootState } from 'src/store'
 import style from './index.module.scss'
 interface IProps {
   selected?: string[]
-  maxNum: number
-  callback(data?: any[]): void
+  maxNum?: number
+  onChange?(data?: any): void
 }
-export default function SelectContact(props: IProps) {
+export default function SelectContact({ selected = [], maxNum = 1000, onChange }: IProps) {
   const userMap = useRootState(state => state.user)
+  const myAccount = useRootState(state => state.global.account)
+  const disabledList = [myAccount].concat(selected)
   const contactList = useMemo(() => {
     const list = []
     for (const key in userMap) {
@@ -21,7 +24,11 @@ export default function SelectContact(props: IProps) {
   return (
     <ul className={style.contactSelect}>
       {contactList.map(item => (
-        <li key={item.account} onClick={() => props.callback([item])}>{item.chinesName}</li>
+        <li key={item.account}>
+          <Checkbox disabled={disabledList.includes(item.account)} defaultChecked={selected.includes(item.account)} onChange={() => onChange?.(item)}>
+            {item.chinesName}
+          </Checkbox>
+        </li>
       ))}
     </ul>
   )
