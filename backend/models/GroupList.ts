@@ -9,6 +9,6 @@ export class GroupList extends BaseEntity {
   groupId: string
 
   @Column()
-  account: string
+  account: string // 此群归属谁---------需要解决每个群成员都需要存一次吗?
 
 }

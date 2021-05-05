@@ -3,6 +3,7 @@ export * from './user'
 export * from './global'
 export * from './conversation'
 export * from './message'
+export * from './group'
 export type ITransferActions<T> = {
   [K in keyof T]: {
     type: K
@@ -21,12 +22,6 @@ export interface IResBase<T = any> {
 
 declare global {
   interface Window {
-    NodeBridge: {
-      closeWindow(): void
-      miniSize(): void
-      maxSize(): void
-      normalSize(): void
-    }
     $state: IRootStateType
     $dispatch: IRootDispatchType
     handleBroadcast<T = any>(channel: string, payload?: T): void

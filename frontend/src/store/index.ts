@@ -5,8 +5,10 @@ import global from './global'
 import conversation from './conversation'
 import message from './message'
 import user from './user'
+import group from './group'
 
 const rootReducer = combineReducers({
+  group,
   user,
   global,
   conversation,

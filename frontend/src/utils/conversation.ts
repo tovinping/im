@@ -22,8 +22,7 @@ type ICheckProps = Pick<IConversation, 'conversationId' | 'type'> & {
 export async function checkConversation(params: ICheckProps) {
   const conversationInfo = window.$state.conversation.list.find(cov => cov.conversationId === params.conversationId)
   if (!conversationInfo && params.create) {
-    const {data, code, msg} = await handCreateConversation({conversationId: params.conversationId, type: params.type})
-    console.log('checkConversation=', data, code, msg)
+    const {data, code} = await handCreateConversation({conversationId: params.conversationId, type: params.type})
     if (code === 0) {
       window.$dispatch({type: 'addConversation', payload: data!})
     }

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Button, Input, message, Spin } from 'antd'
 import { useHistory } from 'react-router'
 import TopBar from 'src/components/TopBar'
-import { doLogin } from 'src/utils'
+import { doLogin, handGetGroupList } from 'src/utils'
 import style from './login.module.scss'
 export default function Login() {
   const history = useHistory()
@@ -18,6 +18,7 @@ export default function Login() {
     if (result.code === 1) {
       message.error(result.msg, 1)
     } else {
+      handGetGroupList()
       history.push('/chat')
     }
   }

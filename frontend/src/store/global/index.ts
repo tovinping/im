@@ -1,4 +1,4 @@
-import { IGlobalState, IGlobalActions } from 'src/interface/global'
+import { IGlobalState, IGlobalActions } from 'src/interface'
 const initialState: IGlobalState = {
   isLogin: false,
   account: '',

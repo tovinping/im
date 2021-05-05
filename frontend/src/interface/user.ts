@@ -4,6 +4,6 @@ export interface IUser extends IBaseUser{}
 export type IUserState = Record<string, IUser | undefined>
 
 interface IActionsMap {
-  setUserMap: IUserState
+  setUser: IUserState
 }
 export type IUserActions = ITransferActions<IActionsMap>[keyof IActionsMap]

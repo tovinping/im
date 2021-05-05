@@ -1,36 +1,20 @@
 import { getManager } from 'typeorm'
-import { Group } from '../models/GroupInfo'
+import { GroupInfo } from '../models/GroupInfo'
 import { GroupMember } from '../models/GroupMember'
 import { Get, Post } from '../router'
 import { generateGroupId } from '../utils'
 
-export default class UserController {
-  @Get('/group/list')
-  async getGroups(ctx: KoaCtx) {
-    try {
-      if (!ctx.query.account) {
-        ctx.error('我说没有数据你信吗?')
-      }
-      const groups = await Group.find()
-      ctx.success(groups)
-    } catch (error) {
-      ctx.error(error.toString())
-    }
-  }
+export default class GroupInfoController {
   @Post('/group/add')
   async addGroup(ctx: KoaCtx) {
     try {
       const data = ctx.request.body
-      console.log(data)
-      if (!data.groupName || !data?.memberList?.length) {
+      if (!data.groupName || !data?.memberList?.length || !data.owner) {
         throw Error('参数不完整')
       }
       const groupId = generateGroupId()
-      const owner = ctx.myId
-      const group = new Group()
-      Object.assign(group, { name: data.groupName, groupId, owner })
-      // const groupMember = new GroupMember()
-      // Object.assign(groupMember, {test: 'aaa'})
+      const group = new GroupInfo()
+      Object.assign(group, { name: data.groupName, groupId, owner: data.owner })
       const members = data.memberList.map(item => {
         return {
           account: item,
@@ -39,12 +23,10 @@ export default class UserController {
       })
       // 创建群的时候需要同时添加群成员-事务操作
       await getManager().transaction(async transactionalEntityManager => {
-        // await transactionalEntityManager.save(group)
-        // await transactionalEntityManager.save(members)
-        await Group.save(group)
+        await GroupInfo.save(group)
         await GroupMember.save(members)
       })
-      ctx.success()
+      ctx.success(group)
     } catch (error) {
       ctx.error(error.toString())
     }
@@ -52,9 +34,8 @@ export default class UserController {
   @Get('/group/byId')
   async getGroupInfoById(ctx: KoaCtx) {
     try {
-      const user = new Group()
-      Object.assign(user, ctx.params)
-      const result = await Group.findOne(user)
+      const {groupId} = ctx.query
+      const result = await GroupInfo.findOne({where: {groupId}})
       ctx.success(result)
     } catch (error) {
       ctx.error(error.toString())

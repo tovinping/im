@@ -5,7 +5,6 @@ import Router from './views/Router'
 import store from './store'
 import reportWebVitals from './reportWebVitals'
 import './index.css'
-import './resource/scss/reset.scss'
 import './utils/eventHandle'
 
 ReactDOM.render(

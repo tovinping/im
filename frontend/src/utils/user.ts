@@ -8,6 +8,6 @@ export async function queryContactList(pageNo = 1) {
       userMap[item.account] = item
     })
     console.log('loadContactList', userMap)
-    window.$dispatch({ type: 'setUserMap', payload: userMap })
+    window.$dispatch({ type: 'setUser', payload: userMap })
   }
 }

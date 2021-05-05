@@ -6,7 +6,7 @@ export default function reducer(
   actions: IUserActions
 ): IUserState {
   switch (actions.type) {
-    case 'setUserMap':
+    case 'setUser':
       return { ...state, ...actions.payload }
     default:
       return state
