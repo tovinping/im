@@ -6,8 +6,10 @@ import conversation from './conversation'
 import message from './message'
 import user from './user'
 import group from './group'
+import member from './member'
 
 const rootReducer = combineReducers({
+  member,
   group,
   user,
   global,

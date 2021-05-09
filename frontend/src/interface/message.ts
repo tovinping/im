@@ -21,4 +21,4 @@ export interface IMsgState {
 interface IActionsMap {
   appendMsg: IMsg
 }
-export type IMsgAction = ITransferActions<IActionsMap>[keyof IActionsMap]
+export type IMsgAction = ITransferActions<IActionsMap>

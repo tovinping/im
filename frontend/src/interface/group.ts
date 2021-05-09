@@ -8,4 +8,4 @@ interface IActionsMap {
   setGroup: IGroupState
 }
 
-export type IGroupActions = ITransferActions<IActionsMap>[keyof IActionsMap]
+export type IGroupActions = ITransferActions<IActionsMap>

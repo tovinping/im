@@ -21,4 +21,4 @@ interface IActionsMap {
   removeConversation: IConversation
   setCurrentConversation: IConversation
 }
-export type IConversationActions = ITransferActions<IActionsMap>[keyof IActionsMap]
+export type IConversationActions = ITransferActions<IActionsMap>

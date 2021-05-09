@@ -10,7 +10,6 @@ export default class GroupListController {
   async getGroups(ctx: KoaCtx) {
     try {
       const { account } = ctx.query
-      
       const groupList = await GroupList.find({ where: { account } })
       const groupIds = groupList.map(item => item.groupId)
       const groupInfoList = await GroupInfo.find({

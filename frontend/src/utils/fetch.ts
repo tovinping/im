@@ -1,7 +1,7 @@
 import { message } from 'antd'
 import config from '../config'
-import { IAnyObj, IResBase } from '../interface'
-export async function get<T = any>(uri: string, payload: IAnyObj): Promise<IResBase<T>> {
+import { IResBase } from '../interface'
+export async function get<T = any>(uri: string, payload: Record<string, any>): Promise<IResBase<T>> {
   let query = '?'
   for (const key in payload) {
     const value = payload[key]
@@ -16,7 +16,7 @@ export async function get<T = any>(uri: string, payload: IAnyObj): Promise<IResB
   }
 }
 
-export async function post<T = any>(uri: string, payload: IAnyObj): Promise<IResBase<T>> {
+export async function post<T = any>(uri: string, payload: Record<string, any>): Promise<IResBase<T>> {
   try {
     const response = await fetch(config.baseUrl + uri, {
       method: 'post',
