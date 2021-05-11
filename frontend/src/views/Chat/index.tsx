@@ -4,7 +4,8 @@ import { useRootState } from 'src/store'
 import Conversation from 'src/views/Components/Conversation'
 import MsgList from '../Components/MsgList'
 import Editor from '../Components/Editor'
-import GroupSide from '../Components/GroupSide'
+import ChatInfo from '../Components/ChatInfo'
+import ChatSide from '../Components/ChatSide'
 const style = require('./index.module.scss')
 export default function Chat() {
   const history = useHistory()
@@ -20,11 +21,12 @@ export default function Chat() {
         <Conversation />
       </div>
       <div className={style.chatRight}>
+        <ChatInfo />
         <MsgList />
         <Editor />
       </div>
       <div className={style.extends}>
-        <GroupSide />
+        <ChatSide />
       </div>
     </div>
   )

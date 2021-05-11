@@ -1,0 +1,24 @@
+.memberList{
+  margin-top: 20px;
+  padding-bottom: 35px;
+  border-bottom: 1px solid #eee;
+}
+.listWrap{
+  display: flex;
+  font-size: 12px;
+}
+.addMember{
+  >div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid #eee;
+  }
+  >span{
+    display: block;
+    text-align: center;
+    margin-top: 3px;
+  }
+}

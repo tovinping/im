@@ -2,7 +2,7 @@ import React from 'react'
 import classnames from 'classnames'
 import {useRootState} from 'src/store'
 import { IConversation } from 'src/interface'
-import defaultAvatar from 'src/resource/images/avatar1.jpg'
+import Avatar from '../Avatar'
 import style from './Item.module.scss'
 export default function ConversationItem(props: IConversation) {
   const currentId = useRootState(state => state.conversation.current?.conversationId)
@@ -14,7 +14,8 @@ export default function ConversationItem(props: IConversation) {
   }
   return (
     <div className={classnames(style.itemContainer, currentId === props.conversationId && style.active)} onClick={handleClick}>
-      <img className={style.avatar} src={defaultAvatar} alt="" />
+      {/* <img className={style.avatar} src={defaultAvatar} alt="" /> */}
+      <Avatar id={props.conversationId} type={props.type} />
       <div className={style.extendInfo}>
         <div>{conversationName || ''}</div>
         <div>{props.lastMsg}</div>
