@@ -21,12 +21,14 @@ export default function Chat() {
         <Conversation />
       </div>
       <div className={style.chatRight}>
-        <ChatInfo />
-        <MsgList />
-        <Editor />
-      </div>
-      <div className={style.extends}>
-        <ChatSide />
+        <div className={style.chatMain}>
+          <ChatInfo />
+          <MsgList />
+          <Editor />
+        </div>
+        <div className={style.extends}>
+          <ChatSide />
+        </div>
       </div>
     </div>
   )

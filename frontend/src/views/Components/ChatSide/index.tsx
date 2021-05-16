@@ -1,5 +1,6 @@
-import React, {useEffect} from 'react'
-import {useRootState} from 'src/store'
+import React, { useEffect } from 'react'
+import { useRootState } from 'src/store'
+import GroupNotice from './GroupNotice'
 import MemberList from './MemberList'
 import MemberSearch from './MemberSearch'
 import { handGetMemberList } from 'src/utils'
@@ -12,12 +13,18 @@ export default function ChatSide() {
       handGetMemberList(currentId)
     }
   }, [currentId, currentType])
-  return <div className={style.chatSide}>
-    <ul>
-      <li>
-        <MemberSearch />
-        <MemberList />
-      </li>
-    </ul>
-  </div>
+  if (!currentId || currentType !== '1') return null
+  return (
+    <div className={style.chatSide}>
+      <ul>
+        <li className={style.sideNotice}>
+          <GroupNotice groupId={currentId} />
+        </li>
+        <li className={style.sideMember}>
+          <MemberSearch className={style.sideMemberSearch} />
+          <MemberList itemStyle={style.memberItemStyle} />
+        </li>
+      </ul>
+    </div>
+  )
 }

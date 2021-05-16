@@ -1,23 +1,21 @@
 import React from 'react'
+import classnames from 'classnames'
 import { useRootState } from 'src/store'
-import Icon from 'src/components/Icon'
 import style from './MemberList.module.scss'
 import MemberItem from './MemberItem'
-export default function MemberList() {
+interface IProps {
+  listStyle?: string;
+  itemStyle?: string;
+}
+export default function MemberList({listStyle, itemStyle}:IProps) {
   const curId = useRootState(state => state.conversation.current?.conversationId)
   const memberList = useRootState(state => state.member[curId!])
   if (!memberList?.length) return null
   return (
-    <div className={style.memberList}>
-      <ul className={style.listWrap}>
-        <li className={style.addMember}>
-          <div>
-            <Icon type={'Plus'} width={30} height={30} fill={'#666'}/>
-          </div>
-          <span>添加</span>
-        </li>
-        {memberList.map(item => <MemberItem account={item.account} />)}
-      </ul>
-    </div>
+    <ul className={classnames(style.memberList, listStyle)}>
+      {memberList.map(item => (
+        <MemberItem key={item.account} account={item.account} classNames={itemStyle} />
+      ))}
+    </ul>
   )
 }

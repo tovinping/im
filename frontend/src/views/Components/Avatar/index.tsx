@@ -6,10 +6,10 @@ interface IProps {
   type: IConversation['type']
   size?: ISize
 }
-export default function Avatar({id, type}: IProps) {
+export default function Avatar({id, type, size}: IProps) {
   if (type === '1') {
-    return <ContactAvatar />
+    return <ContactAvatar size={size} />
   } else {
-    return <ContactAvatar />
+    return <ContactAvatar size={size} />
   }
 }
