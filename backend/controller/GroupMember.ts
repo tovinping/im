@@ -26,8 +26,8 @@ export default class UserController {
         throw Error('参数不完整')
       }
       const user = new GroupMember()
-      Object.assign(user, {groupId: ctx.query.groupId})
-      const result = await GroupMember.find({where: {groupId: ctx.query.groupId}})
+      Object.assign(user, { groupId: ctx.query.groupId })
+      const result = await GroupMember.find({ where: { groupId: ctx.query.groupId } })
       ctx.success(result)
     } catch (error) {
       ctx.error(error.toString())
@@ -47,6 +47,26 @@ export default class UserController {
       ctx.success({})
     } catch (error) {
       ctx.error(error.toString())
+    }
+  }
+  @Post('/groupMember/addAdmin')
+  async addAdmin(ctx: Context) {
+    try {
+      const account = ctx.body.account
+      if (account) {
+        const memberInfo = await GroupMember.findOne({account})
+        if (!memberInfo) {
+          ctx.error('更新失败')
+          return;
+        }
+        memberInfo.type = '1'
+        const result = await GroupMember.save(memberInfo);
+        ctx.success(result)
+      } else {
+        ctx.error('参数错误')
+      }
+    } catch (error) {
+      
     }
   }
 }

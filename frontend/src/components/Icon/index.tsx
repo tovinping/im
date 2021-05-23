@@ -5,7 +5,9 @@ import MinSize from './MinSize'
 import NormalSize from './NormalSize'
 import Plus from './Plus'
 import ThreeDots from './ThreeDots'
+import Person from './Person'
 const SvgMap = {
+  Person,
   ThreeDots,
   Plus,
   Close,

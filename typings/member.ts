@@ -3,5 +3,5 @@ export interface IBaseMemberInfo {
   groupId: string
   /**0普通成员1管理员 */
   type: '0' | '1';
-  nickName: string
+  nickName?: string
 }
