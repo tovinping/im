@@ -24,7 +24,6 @@ export default function MemberItem({ account, type, isOwner, groupId, nickName, 
     evt.preventDefault()
     evt.stopPropagation()
     const result = buildMemberMenu({ account, type, groupId, nickName })
-    console.log('handContextMenu=', evt.clientX, evt.clientY)
     ContextMenu.open(result, {x: evt.clientX, y: evt.clientY})
   }
   return (
@@ -34,7 +33,7 @@ export default function MemberItem({ account, type, isOwner, groupId, nickName, 
         <div className={style.memberName} title={memberName}>
           {memberName}
         </div>
-        {type === '1' ? <Icon type={'Person'} fill={fillColor} /> : null}
+        {type !== '0' ? <Icon type={'Person'} fill={fillColor} /> : null}
       </li>
     </>
   )

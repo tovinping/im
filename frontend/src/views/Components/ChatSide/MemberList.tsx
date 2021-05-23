@@ -14,7 +14,7 @@ export default function MemberList({ listStyle, itemStyle }: IProps) {
   if (!memberList?.length) return null
   return (
     <ul className={classnames(style.memberList, listStyle)}>
-      <MemberItem type={'1'} account={owner!} classNames={itemStyle} isOwner groupId={curId!} />
+      <MemberItem type={'2'} account={owner!} classNames={itemStyle} isOwner groupId={curId!} />
       {memberList.map(item => (
         <MemberItem key={item.account} account={item.account} type={item.type} groupId={curId!} classNames={itemStyle} />
       ))}

@@ -1,5 +1,6 @@
 import { IMemberInfo } from 'src/interface'
 import { IBaseContextItem } from 'src/components/ContextMenu'
+import { updateAdmin } from 'src/api'
 type IMemberContextItem = IBaseContextItem<IMemberInfo>
 type IMemberFn = (m: IMemberInfo, l: IMemberContextItem[]) => void
 
@@ -22,12 +23,19 @@ export const buildAt: IMemberFn = (member, list) => {
   })
 }
 export const buildManagerOpt: IMemberFn = (member, list) => {
+  if (member.type === '2') return
   const name = member.type === '1' ? '取消管理员' : '设置管理员'
   list.push({
     key: 'memberType',
     name,
     cb() {
-      console.log('memberType', member)
+      const {groupId, type, account} = member
+      const changedType = type === '1' ? '0' : '1'
+      updateAdmin({groupId, account, type: changedType}).then(res => {
+        if (res.code === 0) {
+          window.$dispatch({type: 'updateMember', payload: {account, type: changedType, groupId}})
+        }
+      })
     },
   })
 }

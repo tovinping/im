@@ -49,24 +49,26 @@ export default class UserController {
       ctx.error(error.toString())
     }
   }
-  @Post('/groupMember/addAdmin')
+  @Post('/groupMember/admin')
   async addAdmin(ctx: Context) {
     try {
-      const account = ctx.body.account
-      if (account) {
-        const memberInfo = await GroupMember.findOne({account})
+      console.log('TANG==', ctx.request.body)
+      const {account, type, groupId} = ctx.request.body
+      if (account && type && groupId) {
+        const memberInfo = await GroupMember.findOne({where: {account, groupId}})
         if (!memberInfo) {
           ctx.error('更新失败')
           return;
         }
-        memberInfo.type = '1'
+        memberInfo.type = type
+        console.log('TANG=', memberInfo, type)
         const result = await GroupMember.save(memberInfo);
         ctx.success(result)
       } else {
         ctx.error('参数错误')
       }
     } catch (error) {
-      
+      ctx.error(error.toString())
     }
   }
 }
