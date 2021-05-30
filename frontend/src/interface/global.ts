@@ -5,11 +5,16 @@ export interface IGlobalState {
   account: string
   windowSize: 'maxSize' | 'minSize' | 'normalSize'
   windowVisible: 'hide' | 'show'
+  contactSelect: {
+    visible: boolean
+    callback?: Function
+  }
 }
 
 interface IActionsMap {
   updateGlobal: Partial<IGlobalState>
   updateLogin: IGlobalState['isLogin']
   updateAccount: IGlobalState['account']
+  updateContactSelect: IGlobalState['contactSelect']
 }
 export type IGlobalActions = ITransferActions<IActionsMap>

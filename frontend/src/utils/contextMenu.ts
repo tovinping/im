@@ -1,6 +1,7 @@
 import { IMemberInfo } from 'src/interface'
 import { IBaseContextItem } from 'src/components/ContextMenu'
 import { updateAdmin } from 'src/api'
+import { openOrCreateConversation } from 'src/utils'
 type IMemberContextItem = IBaseContextItem<IMemberInfo>
 type IMemberFn = (m: IMemberInfo, l: IMemberContextItem[]) => void
 
@@ -9,7 +10,10 @@ export const buildSendMsg: IMemberFn = (member, list) => {
     key: 'sendMsg',
     name: '发送消息',
     cb() {
-      console.log('sendMsg', member)
+      const conversation = openOrCreateConversation(member.account, '0')
+      if (!conversation) {
+        console.error('创建会话失败')
+      }
     },
   })
 }
@@ -29,11 +33,11 @@ export const buildManagerOpt: IMemberFn = (member, list) => {
     key: 'memberType',
     name,
     cb() {
-      const {groupId, type, account} = member
+      const { groupId, type, account } = member
       const changedType = type === '1' ? '0' : '1'
-      updateAdmin({groupId, account, type: changedType}).then(res => {
+      updateAdmin({ groupId, account, type: changedType }).then(res => {
         if (res.code === 0) {
-          window.$dispatch({type: 'updateMember', payload: {account, type: changedType, groupId}})
+          window.$dispatch({ type: 'updateMember', payload: { account, type: changedType, groupId } })
         }
       })
     },

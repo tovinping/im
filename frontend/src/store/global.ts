@@ -3,19 +3,21 @@ const initialState: IGlobalState = {
   isLogin: false,
   account: '',
   windowSize: 'normalSize',
-  windowVisible: 'show'
+  windowVisible: 'show',
+  contactSelect: {
+    visible: false,
+  },
 }
-export default function reducer(
-  state = initialState,
-  actions: IGlobalActions
-): IGlobalState {
+export default function reducer(state = initialState, actions: IGlobalActions): IGlobalState {
   switch (actions.type) {
     case 'updateGlobal':
       return { ...state, ...actions.payload }
-    case 'updateLogin': 
-      return {...state, isLogin: actions.payload}
+    case 'updateLogin':
+      return { ...state, isLogin: actions.payload }
     case 'updateAccount':
-      return {...state, account: actions.payload}
+      return { ...state, account: actions.payload }
+    case 'updateContactSelect':
+      return { ...state, contactSelect: actions.payload }
     default:
       return state
   }

@@ -16,10 +16,16 @@ export async function handCreateGroup(groupName: string, memberList: string[]) {
   }
 }
 
-export async function handGetGroupList() {
-  const account = window.$state.global.account
-  const {data, code, msg} = await getGroupList(account)
-  console.log('handGetGroupList', data, code, msg)
+export async function getGroupChange() {
+  const conversationList = window.$state.conversation.list
+  const groupIds: string[] = []
+  conversationList.forEach(item => {
+    if (item.type === '1'){
+      groupIds.push(item.conversationId)
+    }
+  })
+  if (groupIds.length < 1) return;
+  const {data, code} = await getGroupList(groupIds)
   if (code === 0) {
     const groupMap: IGroupState = {}
     data?.forEach(item => {

@@ -2,7 +2,7 @@ import { createConversation, getConversations } from "src/api"
 import { ICreateType, IConversation } from "src/interface"
 
 
-export async function getConversation() {
+export async function getConversationChange() {
   const account = window.$state.global.account;
   const {data, code, msg} = await getConversations(account);
   console.log('getConversation=', code, msg)
@@ -36,5 +36,7 @@ export async function openOrCreateConversation(conversationId: string, type: ICo
   const conversationInfo = await checkConversation({conversationId, type, create: true})
   if (conversationInfo) {
     window.$dispatch({type: 'setCurrentConversation', payload: conversationInfo})
+    return true
   }
+  return false
 }

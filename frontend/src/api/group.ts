@@ -1,4 +1,4 @@
-import { post, get } from '../utils/fetch'
+import { post } from '../utils/fetch'
 import { IGroupInfo } from '../interface'
 interface ICreateGroupReq {
   groupName: string,
@@ -8,6 +8,6 @@ interface ICreateGroupReq {
 export function createGroup(params: ICreateGroupReq) {
   return post<IGroupInfo>('/group/add', params)
 }
-export function getGroupList(account: string) {
-  return get<IGroupInfo[]>('/groupList/list', {account})
+export function getGroupList(groupIds: string[]) {
+  return post<IGroupInfo[]>('/groupList/list', {groupIds})
 }

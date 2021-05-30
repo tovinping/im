@@ -1,4 +1,5 @@
 import { login } from 'src/api'
+import { IUser } from 'src/interface'
 import clientSocket from './clientSocket'
 import { queryContactList } from 'src/utils'
 interface IDoLogin {
@@ -13,4 +14,8 @@ export async function doLogin({ account, password }: IDoLogin) {
     queryContactList()
   }
   return data
+}
+
+export function openContactSelect(fn: (list: IUser[]) => any) {
+  window.$dispatch({type: 'updateContactSelect', payload: {visible: true, callback: fn}})
 }

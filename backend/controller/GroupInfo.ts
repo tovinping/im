@@ -1,4 +1,4 @@
-import { getManager } from 'typeorm'
+import { getManager, In } from 'typeorm'
 import { GroupInfo } from '../models/GroupInfo'
 import { GroupMember } from '../models/GroupMember'
 import { Get, Post } from '../router'
@@ -34,9 +34,23 @@ export default class GroupInfoController {
   @Get('/group/byId')
   async getGroupInfoById(ctx: KoaCtx) {
     try {
-      const {groupId} = ctx.query
-      const result = await GroupInfo.findOne({where: {groupId}})
+      const { groupId } = ctx.query
+      const result = await GroupInfo.findOne({ where: { groupId } })
       ctx.success(result)
+    } catch (error) {
+      ctx.error(error.toString())
+    }
+  }
+  @Post('/groupList/list')
+  async getGroupList(ctx: KoaCtx) {
+    try {
+      const {groupIds} = ctx.request.body
+      if (!groupIds || groupIds.length === 0) {
+        ctx.success([])
+      } else {
+        const groupList = await GroupInfo.find({where: {groupId: In(groupIds)}})
+        ctx.success(groupList)
+      }
     } catch (error) {
       ctx.error(error.toString())
     }
