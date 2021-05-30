@@ -2,6 +2,8 @@ import React from 'react'
 import { useRootState } from 'src/store'
 import Icon from 'src/components/Icon'
 import style from './index.module.scss'
+import { handGetMemberList, openContactSelect } from 'src/utils'
+import { addMember } from 'src/api'
 export default function ChatInfo() {
   const currentId = useRootState(state => state.conversation.current?.conversationId)
   const groupInfo = useRootState(state => state.group[currentId!])
@@ -10,7 +12,20 @@ export default function ChatInfo() {
     console.log('handMore...')
   }
   function handAddMember() {
-    console.log('handAddMember...')
+    if (!groupInfo?.groupId) return
+    const members = window.$state.member[groupInfo?.groupId]?.map(member => member.account)
+    if (!members) return
+    openContactSelect({
+      selected: members,
+      callback: async data => {
+        console.log('handAddMember...', data)
+        const accounts = data.map(d => d.account)
+        if (accounts.length) {
+          await addMember(accounts, groupInfo.groupId)
+          handGetMemberList(groupInfo.groupId)
+        }
+      },
+    })
   }
   return (
     <div className={style.chatInfo}>

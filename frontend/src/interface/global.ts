@@ -7,6 +7,7 @@ export interface IGlobalState {
   windowVisible: 'hide' | 'show'
   contactSelect: {
     visible: boolean
+    selected?: string[]
     callback?: Function
   }
 }

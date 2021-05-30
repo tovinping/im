@@ -12,19 +12,21 @@ interface IProps {
   type: IMemberInfo['type']
   groupId: string
   nickName?: string
-  isOwner?: boolean
+  owner?: string
   classNames?: string
 }
-export default function MemberItem({ account, type, isOwner, groupId, nickName, classNames }: IProps) {
+export default function MemberItem({ account, type, owner, groupId, nickName, classNames }: IProps) {
   const userInfo = useRootState(state => state.user[account])
   const showNickName = nickName ? `(${nickName})` : ''
   const memberName = userInfo?.chinesName || '' + showNickName
+  const isOwner = owner === account
+  const isManger = type === '1'
   const fillColor = isOwner ? '#ffc107' : '#2196f3'
   function handContextMenu(evt: React.MouseEvent) {
     evt.preventDefault()
     evt.stopPropagation()
     const result = buildMemberMenu({ account, type, groupId, nickName })
-    ContextMenu.open(result, {x: evt.clientX, y: evt.clientY})
+    ContextMenu.open(result, { x: evt.clientX, y: evt.clientY })
   }
   return (
     <>
@@ -33,7 +35,7 @@ export default function MemberItem({ account, type, isOwner, groupId, nickName, 
         <div className={style.memberName} title={memberName}>
           {memberName}
         </div>
-        {type !== '0' ? <Icon type={'Person'} fill={fillColor} /> : null}
+        {isManger || isOwner ? <Icon type={'Person'} fill={fillColor} /> : null}
       </li>
     </>
   )

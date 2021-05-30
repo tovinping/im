@@ -1,6 +1,6 @@
 import { IMemberInfo } from 'src/interface'
 import { IBaseContextItem } from 'src/components/ContextMenu'
-import { updateAdmin } from 'src/api'
+import { removeMember, updateAdmin } from 'src/api'
 import { openOrCreateConversation } from 'src/utils'
 type IMemberContextItem = IBaseContextItem<IMemberInfo>
 type IMemberFn = (m: IMemberInfo, l: IMemberContextItem[]) => void
@@ -27,7 +27,10 @@ export const buildAt: IMemberFn = (member, list) => {
   })
 }
 export const buildManagerOpt: IMemberFn = (member, list) => {
-  if (member.type === '2') return
+  const groupId = member.groupId
+  const groupInfo = window.$state.group[groupId]
+  if (!groupInfo) return
+  if (groupInfo.owner === member.account) return
   const name = member.type === '1' ? '取消管理员' : '设置管理员'
   list.push({
     key: 'memberType',
@@ -43,11 +46,32 @@ export const buildManagerOpt: IMemberFn = (member, list) => {
     },
   })
 }
+export const buildDelMember: IMemberFn = (member, list) => {
+  const groupId = member.groupId
+  const myAcc = window.$state.global.account
+  const groupInfo = window.$state.group[groupId]
+  if (!groupInfo) return
+  if (groupInfo.owner === member.account) return
+  const isOwner = groupInfo.owner === myAcc
+  const selfMemberInfo = window.$state.member[groupId]?.find(m => m.account === myAcc)
+  if (selfMemberInfo?.type === '1' && member.type === '1') return
+  if (!isOwner && selfMemberInfo?.type === '0') return
+  list.push({
+    key: 'delMember',
+    name: '移除成员',
+    cb() {
+      removeMember([member.account], groupId).then(() => {
+        window.$dispatch({ type: 'removeMember', payload: { groupId, accounts: [member.account] } })
+      })
+    },
+  })
+}
 export function buildMemberMenu(member: IMemberInfo): IMemberContextItem[] {
   const contextList: IMemberContextItem[] = []
   buildSendMsg(member, contextList)
   buildAt(member, contextList)
   buildManagerOpt(member, contextList)
+  buildDelMember(member, contextList)
   return contextList
 }
 // 检查元素是否超出边界

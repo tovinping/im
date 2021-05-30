@@ -6,29 +6,32 @@ import { openContactSelect, openOrCreateConversation, handCreateGroup } from 'sr
 let groupName = ''
 export default function Search() {
   const handCreateConversation = () => {
-    openContactSelect(selectedList => {
-      if (!selectedList || selectedList?.length === 0) return
-      // 创建单聊
-      if (selectedList.length === 1) {
-        const conversationId = selectedList[0].account
-        openOrCreateConversation(conversationId, '0')
-      } else {
-        // 创建群=>创建群会话
-        const confirm = Modal.confirm({
-          title: '请输入群名称',
-          content: <Input placeholder={'请输入群名称'} onChange={e => (groupName = e.target.value)} />,
-          onOk() {
-            const memberList = selectedList.map(item => item.account)
-            handCreateGroup(groupName, memberList).then(async res => {
-              console.log('groupInfo=', res)
-              if (res) {
-                await openOrCreateConversation(res.groupId, '1')
-              }
-              confirm.destroy()
-            })
-          },
-        })
-      }
+    openContactSelect({
+      callback: selectedList => {
+        if (!selectedList || selectedList?.length === 0) return
+        // 创建单聊
+        if (selectedList.length === 1) {
+          const conversationId = selectedList[0].account
+          openOrCreateConversation(conversationId, '0')
+        } else {
+          // 创建群=>创建群会话
+          const confirm = Modal.confirm({
+            title: '请输入群名称',
+            content: <Input placeholder={'请输入群名称'} onChange={e => (groupName = e.target.value)} />,
+            onOk() {
+              const memberList = selectedList.map(item => item.account)
+              handCreateGroup(groupName, memberList).then(async res => {
+                console.log('groupInfo=', res)
+                if (res) {
+                  window.$dispatch({ type: 'setGroup', payload: { [res.groupId]: res } })
+                  await openOrCreateConversation(res.groupId, '1')
+                }
+                confirm.destroy()
+              })
+            },
+          })
+        }
+      },
     })
   }
   return (

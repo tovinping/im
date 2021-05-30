@@ -7,6 +7,7 @@ export type IUpdateMember = Partial<IMemberInfo> & Required<Pick<IMemberInfo, 'a
 interface IActionsMap {
   setMember: IMemberState
   updateMember: IUpdateMember
+  removeMember: {groupId: string, accounts: string[]}
 }
 
 export type IMemberActions = ITransferActions<IActionsMap>

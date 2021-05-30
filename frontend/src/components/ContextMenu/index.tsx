@@ -6,7 +6,7 @@ export interface IBaseContextItem<T = unknown> {
   key: string
   name: string
   ext?: T
-  cb(ext?: T): void
+  cb(): void
 }
 export interface IContextMenuProps {
   position: { x: number; y: number }
@@ -35,7 +35,7 @@ export function ContextMenu({ list, position, close }: IContextMenuProps) {
   }, [position])
   if (!list.length) return null
   const handClick = (item: IBaseContextItem) => {
-    item.cb(item.ext)
+    item.cb()
     close()
   }
   return (

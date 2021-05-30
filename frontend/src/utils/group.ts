@@ -8,7 +8,7 @@ import {IGroupState} from 'src/interface'
  */
 export async function handCreateGroup(groupName: string, memberList: string[]) {
   const owner = window.$state.global.account
-  const {data, code} = await createGroup({groupName, owner, memberList})
+  const {data, code} = await createGroup({groupName, owner, memberList: [owner, ...memberList]})
   if (code === 0) {
     return data
   } else {

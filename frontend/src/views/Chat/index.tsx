@@ -15,7 +15,7 @@ export default function Chat() {
   const history = useHistory()
   const isLogin = useRootState(state => state.global.isLogin)
   const currentType = useRootState(state => state.conversation.current?.type)
-  const { visible } = useRootState(state => state.global.contactSelect)
+  const { visible, selected } = useRootState(state => state.global.contactSelect)
   useEffect(() => {
     if (!isLogin) {
       history.replace('/')
@@ -55,7 +55,7 @@ export default function Chat() {
         ) : null}
       </div>
       <Modal visible={visible} onCancel={handCancel} onOk={handOk} destroyOnClose={true}>
-        <ContactSelect onChange={handContactSelectChange} />
+        <ContactSelect onChange={handContactSelectChange} selected={selected} />
       </Modal>
     </div>
   )

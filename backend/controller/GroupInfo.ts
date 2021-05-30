@@ -44,29 +44,26 @@ export default class GroupInfoController {
   @Post('/groupList/list')
   async getGroupList(ctx: KoaCtx) {
     try {
-      const {groupIds} = ctx.request.body
+      const { groupIds } = ctx.request.body
       if (!groupIds || groupIds.length === 0) {
         ctx.success([])
       } else {
-        const groupList = await GroupInfo.find({where: {groupId: In(groupIds)}})
+        const groupList = await GroupInfo.find({ where: { groupId: In(groupIds) } })
         ctx.success(groupList)
       }
     } catch (error) {
       ctx.error(error.toString())
     }
   }
-  @Post('/group/remove')
-  async removeGroup(ctx: KoaCtx) {
+  @Post('/group/notice')
+  async updateGroupNotice(ctx: KoaCtx) {
     try {
-      ctx.success({})
-    } catch (error) {
-      ctx.error(error.toString())
-    }
-  }
-  @Post('/group/update')
-  async updateGroup(ctx: KoaCtx) {
-    try {
-      ctx.success({})
+      const { groupId, notice } = ctx.request.body
+      if (!groupId || notice === undefined) {
+        throw Error('参数不完整')
+      }
+      await GroupInfo.update({ groupId }, { notice })
+      ctx.success()
     } catch (error) {
       ctx.error(error.toString())
     }

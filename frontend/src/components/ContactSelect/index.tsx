@@ -25,7 +25,7 @@ export default function SelectContact({ selected = [], maxNum = 1000, onChange }
     <ul className={style.contactSelect}>
       {contactList.map(item => (
         <li key={item.account}>
-          <Checkbox disabled={disabledList.includes(item.account)} defaultChecked={selected.includes(item.account)} onChange={() => onChange?.(item)}>
+          <Checkbox disabled={disabledList.includes(item.account)} defaultChecked={disabledList.includes(item.account)} onChange={() => onChange?.(item)}>
             {item.chinesName}
           </Checkbox>
         </li>

@@ -11,3 +11,6 @@ export function createGroup(params: ICreateGroupReq) {
 export function getGroupList(groupIds: string[]) {
   return post<IGroupInfo[]>('/groupList/list', {groupIds})
 }
+export function updateNotice(groupId: string, notice: string) {
+  return post('/group/notice', {groupId, notice})
+}

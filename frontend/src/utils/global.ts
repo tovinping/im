@@ -16,6 +16,10 @@ export async function doLogin({ account, password }: IDoLogin) {
   return data
 }
 
-export function openContactSelect(fn: (list: IUser[]) => any) {
-  window.$dispatch({type: 'updateContactSelect', payload: {visible: true, callback: fn}})
+interface IOpenParam {
+  selected?: string[]
+  callback: (list: IUser[]) => any
+}
+export function openContactSelect(param: IOpenParam) {
+  window.$dispatch({type: 'updateContactSelect', payload: {visible: true, ...param}})
 }
